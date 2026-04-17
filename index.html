@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SoleMark — Loja de Calçado Premium</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--cream:#F7F4EF;--sand:#E8DFD0;--terracotta:#C4704A;--brick:#9E4A2A;--charcoal:#2A2A2A;--warm-gray:#7A7470;--white:#FFFFFF;--gold:#B89653;--light-sand:#F2EDE4}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);min-height:100vh}
+header{position:sticky;top:0;z-index:100;background:var(--charcoal);color:var(--cream);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:70px;box-shadow:0 2px 20px rgba(0,0,0,.25)}
+.logo{font-family:'Playfair Display',serif;font-size:1.6rem;letter-spacing:.05em;color:var(--cream);text-decoration:none}
+.logo span{color:var(--terracotta)}
+nav{display:flex;gap:.5rem}
+.nav-btn{background:none;border:none;color:var(--sand);font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:500;padding:.5rem 1rem;border-radius:4px;cursor:pointer;transition:all .2s;letter-spacing:.03em}
+.nav-btn:hover,.nav-btn.active{color:var(--cream);background:rgba(255,255,255,.1)}
+.nav-btn.sale{color:var(--terracotta);font-weight:700}
+.header-actions{display:flex;align-items:center;gap:1rem}
+.cart-btn{background:var(--terracotta);border:none;color:white;padding:.45rem 1.2rem;border-radius:30px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:600;display:flex;align-items:center;gap:.5rem;transition:background .2s}
+.cart-btn:hover{background:var(--brick)}
+.cart-count{background:white;color:var(--brick);border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700}
+.hero{background:linear-gradient(135deg,var(--charcoal) 0%,#3d3330 100%);color:var(--cream);padding:5rem 3rem;display:flex;align-items:center;justify-content:space-between;min-height:380px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;right:0;top:0;bottom:0;width:45%;background:var(--terracotta);opacity:.12;clip-path:polygon(20% 0%,100% 0%,100% 100%,0% 100%)}
+.hero-text{max-width:550px;position:relative;z-index:1}
+.hero-tag{display:inline-block;background:var(--terracotta);color:white;padding:.25rem .9rem;border-radius:20px;font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.5rem);line-height:1.15;margin-bottom:1rem}
+.hero h1 em{color:var(--gold);font-style:italic}
+.hero p{color:var(--sand);font-size:1rem;line-height:1.6;margin-bottom:2rem;max-width:420px}
+.hero-cta{background:var(--terracotta);color:white;border:none;padding:.85rem 2rem;border-radius:4px;font-size:1rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.hero-cta:hover{background:var(--brick);transform:translateY(-2px);box-shadow:0 8px 20px rgba(196,112,74,.35)}
+.hero-stats{display:flex;gap:2.5rem;position:relative;z-index:1}
+.stat{text-align:center}
+.stat .num{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);display:block}
+.stat .label{font-size:.8rem;color:var(--sand);letter-spacing:.06em;text-transform:uppercase}
+.main-layout{display:grid;grid-template-columns:260px 1fr;gap:2rem;max-width:1400px;margin:0 auto;padding:2rem}
+.sidebar{position:sticky;top:90px;align-self:start}
+.filter-card{background:white;border-radius:12px;padding:1.5rem;margin-bottom:1.2rem;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.filter-card h3{font-family:'Playfair Display',serif;font-size:1rem;margin-bottom:1rem;color:var(--charcoal);display:flex;align-items:center;gap:.5rem}
+.filter-card h3::after{content:'';flex:1;height:1px;background:var(--sand)}
+.filter-group{margin-bottom:1rem}
+.filter-group label{display:block;font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--warm-gray);margin-bottom:.5rem}
+.filter-group select{width:100%;padding:.55rem .9rem;border:1.5px solid var(--sand);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.9rem;background:var(--light-sand);color:var(--charcoal);cursor:pointer;transition:border-color .2s;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237A7470' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .8rem center;padding-right:2.2rem}
+.filter-group select:focus{outline:none;border-color:var(--terracotta)}
+.color-pills{display:flex;flex-wrap:wrap;gap:.4rem}
+.color-pill{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .2s}
+.color-pill:hover,.color-pill.active{border-color:var(--charcoal);transform:scale(1.15)}
+.size-pills{display:flex;flex-wrap:wrap;gap:.4rem}
+.size-pill{padding:.3rem .6rem;border:1.5px solid var(--sand);border-radius:6px;font-size:.78rem;font-weight:500;cursor:pointer;transition:all .2s;background:transparent;font-family:'DM Sans',sans-serif}
+.size-pill:hover{border-color:var(--terracotta);color:var(--terracotta)}
+.size-pill.active{background:var(--terracotta);color:white;border-color:var(--terracotta)}
+.apply-btn{width:100%;background:var(--charcoal);color:var(--cream);border:none;padding:.75rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.9rem;cursor:pointer;transition:all .2s;margin-top:.5rem}
+.apply-btn:hover{background:var(--terracotta)}
+.products-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
+.products-header h2{font-family:'Playfair Display',serif;font-size:1.6rem}
+.products-header h2 span{color:var(--warm-gray);font-weight:400;font-size:1rem;margin-left:.5rem;font-family:'DM Sans',sans-serif}
+.sort-row{display:flex;align-items:center;gap:.8rem}
+.sort-row label{font-size:.85rem;color:var(--warm-gray);font-weight:500}
+.sort-row select{padding:.4rem .8rem;border:1.5px solid var(--sand);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.85rem;background:white;cursor:pointer}
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:1.5rem}
+.product-card{background:white;border-radius:12px;overflow:hidden;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.06);transition:all .3s;position:relative}
+.product-card:hover{transform:translateY(-6px);box-shadow:0 12px 32px rgba(0,0,0,.13)}
+.product-badge{position:absolute;top:.75rem;left:.75rem;z-index:5;background:var(--terracotta);color:white;font-size:.7rem;font-weight:700;letter-spacing:.06em;padding:.2rem .6rem;border-radius:20px;text-transform:uppercase}
+.product-badge.sale{background:#D44}
+.wish-btn{position:absolute;top:.6rem;right:.6rem;z-index:5;background:white;border:none;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.12);font-size:1rem;transition:all .2s;color:#ccc}
+.wish-btn:hover,.wish-btn.active{color:#e44}
+.product-img{width:100%;aspect-ratio:1/1;background:var(--light-sand);display:flex;align-items:center;justify-content:center;font-size:5rem;transition:transform .4s}
+.product-card:hover .product-img{transform:scale(1.04)}
+.product-info{padding:1rem}
+.brand-tag{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:.3rem}
+.product-name{font-size:.92rem;font-weight:500;color:var(--charcoal);margin-bottom:.25rem;line-height:1.3}
+.product-sub{font-size:.78rem;color:var(--warm-gray);margin-bottom:.6rem}
+.product-footer{display:flex;align-items:center;justify-content:space-between}
+.price{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700}
+.price .old{font-size:.8rem;color:var(--warm-gray);text-decoration:line-through;margin-right:.4rem;font-family:'DM Sans',sans-serif;font-weight:400}
+.price.sale-price{color:#D44}
+.add-btn{background:var(--charcoal);color:white;border:none;border-radius:8px;padding:.4rem .9rem;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s}
+.add-btn:hover{background:var(--terracotta)}
+.pagination{display:flex;justify-content:center;gap:.5rem;margin:3rem 0 1rem;flex-wrap:wrap}
+.page-btn{width:40px;height:40px;border:1.5px solid var(--sand);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.9rem;background:white;transition:all .2s;font-weight:500}
+.page-btn:hover{border-color:var(--terracotta);color:var(--terracotta)}
+.page-btn.active{background:var(--charcoal);color:white;border-color:var(--charcoal)}
+.modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:white;border-radius:16px;max-width:820px;width:95%;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.3);animation:slideUp .3s ease}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-close{position:absolute;top:1rem;right:1rem;z-index:10;background:var(--cream);border:none;border-radius:50%;width:36px;height:36px;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.modal-close:hover{background:var(--sand)}
+.modal-body{display:grid;grid-template-columns:1fr 1fr}
+.modal-img{background:var(--light-sand);display:flex;align-items:center;justify-content:center;font-size:7rem;aspect-ratio:1/1;border-radius:16px 0 0 16px}
+.modal-details{padding:2.5rem 2rem}
+.modal-details .brand-tag{font-size:.75rem;margin-bottom:.4rem}
+.modal-details h2{font-family:'Playfair Display',serif;font-size:1.5rem;line-height:1.25;margin-bottom:.4rem}
+.modal-details .ref{font-size:.78rem;color:var(--warm-gray);margin-bottom:.8rem}
+.modal-details .m-price{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--charcoal);margin-bottom:1.2rem}
+.modal-details .m-price.sale{color:#D44}
+.option-label{font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--warm-gray);margin-bottom:.5rem;margin-top:1rem}
+.modal-sizes{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.5rem}
+.modal-size{padding:.3rem .75rem;border:1.5px solid var(--sand);border-radius:6px;font-size:.82rem;cursor:pointer;transition:all .2s;background:transparent;font-family:'DM Sans',sans-serif}
+.modal-size:hover{border-color:var(--terracotta)}
+.modal-size.active{background:var(--charcoal);color:white;border-color:var(--charcoal)}
+.modal-widths{display:flex;flex-wrap:wrap;gap:.4rem}
+.modal-width{padding:.25rem .6rem;border:1.5px solid var(--sand);border-radius:6px;font-size:.78rem;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.modal-width:hover{border-color:var(--gold)}
+.modal-width.active{background:var(--gold);color:white;border-color:var(--gold)}
+.modal-add{width:100%;background:var(--charcoal);color:white;border:none;border-radius:10px;padding:.9rem;font-size:1rem;font-weight:600;cursor:pointer;transition:all .2s;margin-top:1.5rem;font-family:'DM Sans',sans-serif}
+.modal-add:hover{background:var(--terracotta)}
+.cart-drawer{position:fixed;top:0;right:-420px;width:400px;height:100vh;background:white;z-index:300;box-shadow:-5px 0 40px rgba(0,0,0,.2);transition:right .35s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+.cart-drawer.open{right:0}
+.cart-drawer-header{padding:1.5rem;border-bottom:1px solid var(--sand);display:flex;align-items:center;justify-content:space-between}
+.cart-drawer-header h3{font-family:'Playfair Display',serif;font-size:1.3rem}
+.close-drawer{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--warm-gray)}
+.cart-items{flex:1;overflow-y:auto;padding:1rem 1.5rem}
+.cart-item{display:flex;gap:1rem;align-items:center;padding:.8rem 0;border-bottom:1px solid var(--light-sand)}
+.cart-item-img{width:60px;height:60px;background:var(--light-sand);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0}
+.cart-item-info{flex:1}
+.cart-item-info .name{font-size:.88rem;font-weight:500;margin-bottom:.2rem}
+.cart-item-info .meta{font-size:.75rem;color:var(--warm-gray)}
+.cart-item-price{font-weight:700;font-size:.9rem}
+.remove-item{background:none;border:none;cursor:pointer;color:#ccc;font-size:1rem;transition:color .2s}
+.remove-item:hover{color:#e44}
+.cart-footer{padding:1.5rem;border-top:1px solid var(--sand)}
+.cart-total{display:flex;justify-content:space-between;margin-bottom:1rem}
+.cart-total .label{font-weight:500}
+.cart-total .amount{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700}
+.checkout-btn{width:100%;background:var(--terracotta);color:white;border:none;padding:1rem;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:background .2s;margin-bottom:.6rem}
+.checkout-btn:hover{background:var(--brick)}
+.continue-btn{width:100%;background:none;color:var(--charcoal);border:1.5px solid var(--sand);padding:.75rem;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:500;cursor:pointer;transition:border-color .2s}
+.continue-btn:hover{border-color:var(--charcoal)}
+.cart-overlay{display:none;position:fixed;inset:0;z-index:250;background:rgba(0,0,0,.4)}
+.cart-overlay.open{display:block}
+.empty-cart{text-align:center;padding:3rem 1rem;color:var(--warm-gray)}
+.empty-cart .icon{font-size:3rem;margin-bottom:.8rem}
+.empty-cart p{font-size:.9rem}
+footer{background:var(--charcoal);color:var(--sand);padding:3rem 3rem 1.5rem;margin-top:4rem}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;margin-bottom:2.5rem}
+.footer-brand .logo{font-size:1.4rem;margin-bottom:.8rem;display:block}
+.footer-brand p{font-size:.88rem;line-height:1.6;color:var(--warm-gray);max-width:240px}
+.footer-col h4{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--cream);margin-bottom:1rem}
+.footer-col a{display:block;color:var(--warm-gray);text-decoration:none;font-size:.88rem;margin-bottom:.5rem;transition:color .2s}
+.footer-col a:hover{color:var(--terracotta)}
+.footer-bottom{border-top:1px solid #3a3a3a;padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--warm-gray)}
+.payment-icons{display:flex;gap:.5rem}
+.pay-icon{background:#3a3a3a;border-radius:4px;padding:.3rem .6rem;font-size:.7rem;font-weight:700;color:var(--sand);letter-spacing:.05em}
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--charcoal);color:var(--cream);padding:.8rem 1.5rem;border-radius:30px;font-size:.9rem;font-weight:500;z-index:400;transition:transform .3s cubic-bezier(.4,0,.2,1);white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+@media(max-width:900px){.main-layout{grid-template-columns:1fr}.sidebar{position:static}.hero{padding:3rem 1.5rem;flex-direction:column;gap:2rem}.hero-stats{justify-content:center}.modal-body{grid-template-columns:1fr}.modal-img{border-radius:16px 16px 0 0}.footer-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){header{padding:0 1rem}.main-layout{padding:1rem}.cart-drawer{width:100%}.footer-grid{grid-template-columns:1fr}footer{padding:2rem 1.5rem 1rem}nav{display:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="#">Sole<span>Mark</span></a>
+  <nav>
+    <button class="nav-btn active" onclick="setNav(this,'mulher')">Mulher</button>
+    <button class="nav-btn" onclick="setNav(this,'homem')">Homem</button>
+    <button class="nav-btn" onclick="setNav(this,'acessorios')">Acessórios</button>
+    <button class="nav-btn" onclick="setNav(this,'')">Todos</button>
+    <button class="nav-btn sale" onclick="filterSale()">Sale 🔥</button>
+  </nav>
+  <div class="header-actions">
+    <button class="cart-btn" onclick="openCart()">
+      🛒 Carrinho <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-text">
+    <span class="hero-tag">Nova Coleção 2025</span>
+    <h1>Conforto que <em>inspira</em><br>elegância natural</h1>
+    <p>Calçado premium com design ortopédico — perfeito para o dia a dia exigente, com qualidade que dura anos.</p>
+    <button class="hero-cta" onclick="document.querySelector('.main-layout').scrollIntoView({behavior:'smooth'})">Ver Coleção →</button>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><span class="num">500+</span><span class="label">Modelos</span></div>
+    <div class="stat"><span class="num">15+</span><span class="label">Anos</span></div>
+    <div class="stat"><span class="num">98%</span><span class="label">Satisfação</span></div>
+  </div>
+</div>
+
+<div class="main-layout">
+  <aside class="sidebar">
+    <div class="filter-card">
+      <h3>Filtrar</h3>
+      <div class="filter-group">
+        <label>Categoria</label>
+        <select id="catFilter" onchange="applyFilters()">
+          <option value="">— Todas —</option>
+          <option value="mulher">Mulher</option>
+          <option value="homem">Homem</option>
+          <option value="acessorios">Acessórios</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Tipo</label>
+        <select id="typeFilter" onchange="applyFilters()">
+          <option value="">— Todos —</option>
+          <option value="sandalia">Sandálias</option>
+          <option value="pantolette">Pantoletes</option>
+          <option value="sapatilha">Sapatilhas</option>
+          <option value="bota">Botas</option>
+          <option value="sapato">Sapatos Clássicos</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Linha</label>
+        <select id="lineFilter" onchange="applyFilters()">
+          <option value="">— Todas —</option>
+          <option value="premium">Premium</option>
+          <option value="comfort">Comfort</option>
+          <option value="classic">Classic</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Cor</label>
+        <div class="color-pills">
+          <div class="color-pill" style="background:#c0a882" title="Bege" data-color="bege" onclick="toggleColor(this)"></div>
+          <div class="color-pill" style="background:#4a6fa5" title="Azul" data-color="azul" onclick="toggleColor(this)"></div>
+          <div class="color-pill" style="background:#7a4a2a" title="Castanho" data-color="castanho" onclick="toggleColor(this)"></div>
+          <div class="color-pill" style="background:#888" title="Cinzento" data-color="cinzento" onclick="toggleColor(this)"></div>
+          <div class="color-pill" style="background:#222" title="Preto" data-color="preto" onclick="toggleColor(this)"></div>
+          <div class="color-pill" style="background:#c94040" title="Vermelho" data-color="vermelho" onclick="toggleColor(this)"></div>
+          <div class="color-pill" style="background:#d4af37;border:1px solid #bbb" title="Dourado" data-color="dourado" onclick="toggleColor(this)"></div>
+          <div class="color-pill" style="background:#eee;border:1px solid #ccc" title="Branco" data-color="branco" onclick="toggleColor(this)"></div>
+        </div>
+      </div>
+      <div class="filter-group">
+        <label>Tamanho</label>
+        <div class="size-pills">
+          <button class="size-pill" onclick="toggleSize(this)">36</button>
+          <button class="size-pill" onclick="toggleSize(this)">37</button>
+          <button class="size-pill" onclick="toggleSize(this)">38</button>
+          <button class="size-pill" onclick="toggleSize(this)">39</button>
+          <button class="size-pill" onclick="toggleSize(this)">40</button>
+          <button class="size-pill" onclick="toggleSize(this)">41</button>
+          <button class="size-pill" onclick="toggleSize(this)">42</button>
+          <button class="size-pill" onclick="toggleSize(this)">43</button>
+          <button class="size-pill" onclick="toggleSize(this)">44</button>
+          <button class="size-pill" onclick="toggleSize(this)">45</button>
+        </div>
+      </div>
+      <div class="filter-group">
+        <label>Largura</label>
+        <div class="size-pills">
+          <button class="size-pill" onclick="this.classList.toggle('active')">F</button>
+          <button class="size-pill" onclick="this.classList.toggle('active')">G</button>
+          <button class="size-pill" onclick="this.classList.toggle('active')">H</button>
+          <button class="size-pill" onclick="this.classList.toggle('active')">J</button>
+          <button class="size-pill" onclick="this.classList.toggle('active')">K</button>
+          <button class="size-pill" onclick="this.classList.toggle('active')">M</button>
+          <button class="size-pill" onclick="this.classList.toggle('active')">N</button>
+        </div>
+      </div>
+      <button class="apply-btn" onclick="resetFilters()">↺ Limpar Filtros</button>
+    </div>
+    <div class="filter-card">
+      <h3>Apoio</h3>
+      <p style="font-size:.85rem;color:var(--warm-gray);line-height:1.6;margin-bottom:1rem">Precisa de ajuda com a sua encomenda?</p>
+      <a href="mailto:info@solemark.pt" style="display:block;color:var(--terracotta);font-size:.88rem;font-weight:600;text-decoration:none;margin-bottom:.4rem">📧 info@solemark.pt</a>
+      <a href="tel:+351210000000" style="display:block;color:var(--charcoal);font-size:.88rem;font-weight:600;text-decoration:none">📞 +351 210 000 000</a>
+    </div>
+  </aside>
+
+  <section>
+    <div class="products-header">
+      <h2>Coleção <span id="productCount"></span></h2>
+      <div class="sort-row">
+        <label>Ordenar:</label>
+        <select id="sortSelect" onchange="applyFilters()">
+          <option value="default">Relevância</option>
+          <option value="price-asc">Preço ↑</option>
+          <option value="price-desc">Preço ↓</option>
+          <option value="name">Nome A–Z</option>
+        </select>
+      </div>
+    </div>
+    <div class="product-grid" id="productGrid"></div>
+    <div class="pagination" id="pagination"></div>
+  </section>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-body">
+      <div class="modal-img" id="modalImg"></div>
+      <div class="modal-details">
+        <div class="brand-tag" id="modalBrand"></div>
+        <h2 id="modalName"></h2>
+        <div class="ref" id="modalRef"></div>
+        <div class="m-price" id="modalPrice"></div>
+        <div class="option-label">Tamanho</div>
+        <div class="modal-sizes" id="modalSizes"></div>
+        <div class="option-label">Largura</div>
+        <div class="modal-widths" id="modalWidths"></div>
+        <button class="modal-add" onclick="addFromModal()">Adicionar ao Carrinho</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CART -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-drawer-header">
+    <h3>🛍 Carrinho</h3>
+    <button class="close-drawer" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer">
+    <div class="cart-total"><span class="label">Total</span><span class="amount" id="cartTotal">€0,00</span></div>
+    <button class="checkout-btn" onclick="checkout()">Finalizar Compra →</button>
+    <button class="continue-btn" onclick="closeCart()">Continuar a Comprar</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a class="logo">Sole<span>Mark</span></a>
+      <p style="margin-top:.8rem">Calçado premium com conforto ortopédico. Qualidade artesanal, estilo contemporâneo, para quem exige o melhor.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Loja</h4>
+      <a href="#">Mulher</a><a href="#">Homem</a><a href="#">Acessórios</a><a href="#">Sale</a>
+    </div>
+    <div class="footer-col">
+      <h4>Ajuda</h4>
+      <a href="#">Encomendas</a><a href="#">Envio & Entregas</a><a href="#">Devoluções</a><a href="#">Guia de Tamanhos</a><a href="#">FAQs</a>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <a href="#">Sobre Nós</a><a href="#">Sustentabilidade</a><a href="#">Privacidade</a><a href="#">Termos</a><a href="#">Contacto</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 SoleMark. Todos os direitos reservados.</span>
+    <div class="payment-icons">
+      <span class="pay-icon">VISA</span><span class="pay-icon">MC</span><span class="pay-icon">MB WAY</span><span class="pay-icon">PayPal</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const products=[
+  {id:1,name:'Pantolette Wellness Especial',brand:'Premium',line:'premium',cat:'mulher',type:'pantolette',price:109,colors:['bege','castanho'],sizes:[36,37,38,39,40,41],widths:['G','H','J'],emoji:'👡',ref:'REF-1020761',width:'G',badge:'Novo'},
+  {id:2,name:'Sandália Soft Comfort',brand:'Comfort',line:'comfort',cat:'mulher',type:'sandalia',price:89,colors:['azul','preto'],sizes:[36,37,38,39,40],widths:['F','G','H'],emoji:'👡',ref:'REF-1022515',width:'F'},
+  {id:3,name:'Sapatilha Classic Walk',brand:'Classic',line:'classic',cat:'mulher',type:'sapatilha',price:99,oldPrice:129,colors:['branco','cinzento'],sizes:[37,38,39,40,41,42],widths:['G','H','J','K'],emoji:'👟',ref:'REF-1022478',width:'G',badge:'Sale'},
+  {id:4,name:'Bota Ortopédica Inverno',brand:'Premium',line:'premium',cat:'mulher',type:'bota',price:189,colors:['preto','castanho'],sizes:[36,37,38,39,40,41],widths:['G','H'],emoji:'👢',ref:'REF-1022470',width:'H',badge:'Novo'},
+  {id:5,name:'Sapato Derby Elegante',brand:'Classic',line:'classic',cat:'homem',type:'sapato',price:135,colors:['preto','castanho'],sizes:[40,41,42,43,44,45],widths:['G','H','J'],emoji:'👞',ref:'REF-1020574',width:'G'},
+  {id:6,name:'Sandália Masculina Sport',brand:'Comfort',line:'comfort',cat:'homem',type:'sandalia',price:79,oldPrice:99,colors:['castanho','bege'],sizes:[40,41,42,43,44],widths:['H','J','K'],emoji:'🩴',ref:'REF-1022467',width:'H',badge:'Sale'},
+  {id:7,name:'Pantolette Relax Homem',brand:'Comfort',line:'comfort',cat:'homem',type:'pantolette',price:65,colors:['cinzento','preto'],sizes:[40,41,42,43,44,45],widths:['G','H','J','M'],emoji:'🩴',ref:'REF-1022523',width:'G'},
+  {id:8,name:'Bota Chelsea Clássica',brand:'Classic',line:'classic',cat:'homem',type:'bota',price:165,colors:['preto','castanho'],sizes:[40,41,42,43,44,45],widths:['G','H','J'],emoji:'👢',ref:'REF-1020844',width:'H',badge:'Novo'},
+  {id:9,name:'Sapatilha Corrida Ultra',brand:'Premium',line:'premium',cat:'mulher',type:'sapatilha',price:119,colors:['branco','vermelho','azul'],sizes:[36,37,38,39,40,41,42],widths:['F','G','H'],emoji:'👟',ref:'REF-1022445',width:'F'},
+  {id:10,name:'Sandália Verão Trançada',brand:'Classic',line:'classic',cat:'mulher',type:'sandalia',price:72,colors:['bege','dourado'],sizes:[36,37,38,39,40],widths:['G','H'],emoji:'👡',ref:'REF-1020855',width:'G'},
+  {id:11,name:'Mocassim Casual',brand:'Classic',line:'classic',cat:'homem',type:'sapato',price:98,colors:['castanho','preto'],sizes:[40,41,42,43,44],widths:['G','H','J'],emoji:'🥿',ref:'REF-1022451',width:'H'},
+  {id:12,name:'Palmilha Conforto Mulher',brand:'Comfort',line:'comfort',cat:'acessorios',type:'sandalia',price:25,colors:['bege'],sizes:[36,37,38,39,40,41],widths:['G'],emoji:'🧦',ref:'REF-1022475',width:'G'},
+  {id:13,name:'Palmilha Ortopédica Homem',brand:'Premium',line:'premium',cat:'acessorios',type:'pantolette',price:29,colors:['bege'],sizes:[40,41,42,43,44,45],widths:['H'],emoji:'🧦',ref:'REF-1022525',width:'H'},
+  {id:14,name:'Sapatilha Urban Style',brand:'Premium',line:'premium',cat:'homem',type:'sapatilha',price:129,oldPrice:159,colors:['branco','preto','cinzento'],sizes:[40,41,42,43,44,45],widths:['G','H','J'],emoji:'👟',ref:'REF-1022516',width:'G',badge:'Sale'},
+  {id:15,name:'Bota Ankle Inverno',brand:'Comfort',line:'comfort',cat:'mulher',type:'bota',price:149,colors:['preto','castanho','cinzento'],sizes:[36,37,38,39,40,41],widths:['G','H','J','K'],emoji:'👢',ref:'REF-1020727',width:'H'},
+  {id:16,name:'Sapato Oxford Premium',brand:'Premium',line:'premium',cat:'homem',type:'sapato',price:175,colors:['preto','castanho'],sizes:[41,42,43,44,45],widths:['G','H'],emoji:'👞',ref:'REF-1022542',width:'G',badge:'Novo'},
+];
+
+let cart=JSON.parse(localStorage.getItem('sm_cart')||'[]');
+let currentProduct=null,selSize=null,selWidth=null,selColors=[],isSale=false,currentPage=1;
+const PER=12;
+
+function fmtPrice(p){return'€'+p.toFixed(2).replace('.',',')}
+
+function getFiltered(){
+  let l=[...products];
+  const cat=document.getElementById('catFilter').value;
+  const type=document.getElementById('typeFilter').value;
+  const line=document.getElementById('lineFilter').value;
+  const sort=document.getElementById('sortSelect').value;
+  if(isSale)l=l.filter(p=>p.oldPrice);
+  if(cat)l=l.filter(p=>p.cat===cat);
+  if(type)l=l.filter(p=>p.type===type);
+  if(line)l=l.filter(p=>p.line===line);
+  if(selColors.length)l=l.filter(p=>selColors.some(c=>p.colors.includes(c)));
+  if(sort==='price-asc')l.sort((a,b)=>a.price-b.price);
+  if(sort==='price-desc')l.sort((a,b)=>b.price-a.price);
+  if(sort==='name')l.sort((a,b)=>a.name.localeCompare(b.name));
+  return l;
+}
+
+function render(){
+  const filtered=getFiltered();
+  document.getElementById('productCount').textContent=`(${filtered.length} artigos)`;
+  const start=(currentPage-1)*PER;
+  const page=filtered.slice(start,start+PER);
+  const grid=document.getElementById('productGrid');
+  if(!page.length){
+    grid.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:4rem 1rem;color:var(--warm-gray)"><div style="font-size:3rem;margin-bottom:1rem">🔍</div><p style="font-size:1rem;font-weight:500">Nenhum artigo encontrado</p><p style="font-size:.85rem;margin-top:.5rem">Tente ajustar os filtros</p></div>`;
+  }else{
+    grid.innerHTML=page.map(p=>`
+      <div class="product-card" onclick="openModal(${p.id})">
+        ${p.badge?`<div class="product-badge${p.badge==='Sale'?' sale':''}">${p.badge}</div>`:''}
+        <button class="wish-btn" onclick="toggleWish(event,this)">♡</button>
+        <div class="product-img">${p.emoji}</div>
+        <div class="product-info">
+          <div class="brand-tag">${p.brand}</div>
+          <div class="product-name">${p.name}</div>
+          <div class="product-sub">Larg. ${p.width} · ${p.cat==='mulher'?'Mulher':p.cat==='homem'?'Homem':'Acessório'}</div>
+          <div class="product-footer">
+            <div class="price${p.oldPrice?' sale-price':''}">
+              ${p.oldPrice?`<span class="old">${fmtPrice(p.oldPrice)}</span>`:''}${fmtPrice(p.price)}
+            </div>
+            <button class="add-btn" onclick="quickAdd(event,${p.id})">+ Cesto</button>
+          </div>
+        </div>
+      </div>`).join('');
+  }
+  const pages=Math.ceil(filtered.length/PER);
+  const pag=document.getElementById('pagination');
+  pag.innerHTML=pages>1?Array.from({length:pages},(_,i)=>`<button class="page-btn${currentPage===i+1?' active':''}" onclick="goPage(${i+1})">${i+1}</button>`).join(''):'';
+}
+
+function goPage(p){currentPage=p;render();window.scrollTo({top:300,behavior:'smooth'})}
+function applyFilters(){currentPage=1;render()}
+function setNav(btn,cat){
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');isSale=false;
+  document.getElementById('catFilter').value=cat;applyFilters();
+}
+function filterSale(){isSale=true;applyFilters()}
+function toggleColor(el){
+  const c=el.dataset.color;
+  el.classList.toggle('active');
+  selColors=el.classList.contains('active')?[...selColors,c]:selColors.filter(x=>x!==c);
+  applyFilters();
+}
+function toggleSize(el){
+  document.querySelectorAll('.size-pill').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');applyFilters();
+}
+function resetFilters(){
+  document.getElementById('catFilter').value='';
+  document.getElementById('typeFilter').value='';
+  document.getElementById('lineFilter').value='';
+  document.getElementById('sortSelect').value='default';
+  selColors=[];isSale=false;
+  document.querySelectorAll('.color-pill,.size-pill').forEach(p=>p.classList.remove('active'));
+  applyFilters();
+}
+
+function openModal(id){
+  const p=products.find(x=>x.id===id);
+  currentProduct=p;selSize=null;selWidth=null;
+  document.getElementById('modalBrand').textContent=p.brand;
+  document.getElementById('modalName').textContent=p.name;
+  document.getElementById('modalRef').textContent='Ref: '+p.ref;
+  document.getElementById('modalImg').textContent=p.emoji;
+  document.getElementById('modalPrice').innerHTML=p.oldPrice
+    ?`<span style="font-size:1rem;text-decoration:line-through;color:var(--warm-gray);font-family:'DM Sans'">${fmtPrice(p.oldPrice)}</span> ${fmtPrice(p.price)}`
+    :fmtPrice(p.price);
+  document.getElementById('modalPrice').className='m-price'+(p.oldPrice?' sale':'');
+  document.getElementById('modalSizes').innerHTML=p.sizes.map(s=>`<button class="modal-size" onclick="selSz(this,'${s}')">${s}</button>`).join('');
+  document.getElementById('modalWidths').innerHTML=p.widths.map(w=>`<button class="modal-width" onclick="selWd(this,'${w}')">${w}</button>`).join('');
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow='';}
+function selSz(el,s){document.querySelectorAll('.modal-size').forEach(b=>b.classList.remove('active'));el.classList.add('active');selSize=s;}
+function selWd(el,w){document.querySelectorAll('.modal-width').forEach(b=>b.classList.remove('active'));el.classList.add('active');selWidth=w;}
+function addFromModal(){
+  if(!selSize){showToast('Por favor escolha um tamanho');return;}
+  addToCart(currentProduct,selSize,selWidth||currentProduct.widths[0]);
+  closeModal();
+}
+
+function quickAdd(e,id){e.stopPropagation();const p=products.find(x=>x.id===id);addToCart(p,p.sizes[Math.floor(p.sizes.length/2)],p.width);}
+function addToCart(p,size,width){
+  const key=`${p.id}-${size}-${width}`;
+  const ex=cart.find(i=>i.key===key);
+  if(ex)ex.qty++;
+  else cart.push({key,id:p.id,name:p.name,price:p.price,emoji:p.emoji,size,width,qty:1});
+  saveCart();showToast(`✓ ${p.name} adicionado ao carrinho`);
+}
+function removeFromCart(key){cart=cart.filter(i=>i.key!==key);saveCart();renderCart();}
+function saveCart(){localStorage.setItem('sm_cart',JSON.stringify(cart));document.getElementById('cartCount').textContent=cart.reduce((s,i)=>s+i.qty,0);}
+function renderCart(){
+  const el=document.getElementById('cartItems');
+  if(!cart.length){el.innerHTML='<div class="empty-cart"><div class="icon">🛍</div><p>O seu carrinho está vazio</p></div>';document.getElementById('cartTotal').textContent='€0,00';return;}
+  el.innerHTML=cart.map(i=>`<div class="cart-item"><div class="cart-item-img">${i.emoji}</div><div class="cart-item-info"><div class="name">${i.name}</div><div class="meta">Tam. ${i.size} · Larg. ${i.width} · Qty: ${i.qty}</div></div><div class="cart-item-price">${fmtPrice(i.price*i.qty)}</div><button class="remove-item" onclick="removeFromCart('${i.key}')">🗑</button></div>`).join('');
+  document.getElementById('cartTotal').textContent=fmtPrice(cart.reduce((s,i)=>s+i.price*i.qty,0));
+}
+function openCart(){document.getElementById('cartDrawer').classList.add('open');document.getElementById('cartOverlay').classList.add('open');document.body.style.overflow='hidden';renderCart();}
+function closeCart(){document.getElementById('cartDrawer').classList.remove('open');document.getElementById('cartOverlay').classList.remove('open');document.body.style.overflow='';}
+function checkout(){if(!cart.length){showToast('Carrinho vazio!');return;}showToast('🎉 Encomenda simulada! Obrigado pela compra.');cart=[];saveCart();renderCart();closeCart();}
+function toggleWish(e,btn){e.stopPropagation();btn.classList.toggle('active');btn.textContent=btn.classList.contains('active')?'♥':'♡';}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
+
+saveCart();render();
+</script>
+</body>
+</html>
