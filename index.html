@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>KIARMED — Conforto Ortopedico </title>
+<title>KIARMED — Orthopedic Comfort</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
 :root{--cream:#F4FBFA;--sand:#DFF5F3;--terracotta:#4EC7C0;--brick:#2FA39D;--charcoal:#183536;--warm-gray:#5F7C7C;--white:#FFFFFF;--gold:#7DD9D3;--light-sand:#EFFBFA;--mint:#BDEEEA;--border:#CBE9E7;--soft-shadow:0 10px 28px rgba(25,85,84,.10)}
@@ -68,7 +68,8 @@ nav{display:flex;gap:.5rem}
 .product-badge.sale{background:#D44}
 .wish-btn{position:absolute;top:.8rem;right:.8rem;z-index:5;background:white;border:none;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 20px rgba(25,85,84,.12);font-size:1rem;transition:all .2s;color:#ccc}
 .wish-btn:hover,.wish-btn.active{color:#e44}
-.product-img{width:100%;aspect-ratio:1/1;background:linear-gradient(180deg,#effbfa 0%,#dff5f3 100%);display:flex;align-items:center;justify-content:center;font-size:5rem;transition:transform .4s}
+.product-img{width:100%;aspect-ratio:1/1;background:linear-gradient(180deg,#effbfa 0%,#dff5f3 100%);display:flex;align-items:center;justify-content:center;overflow:hidden;transition:transform .4s}
+.product-img img{width:100%;height:100%;object-fit:cover;display:block}
 .product-card:hover .product-img{transform:scale(1.04)}
 .product-info{padding:1rem}
 .brand-tag{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:.3rem}
@@ -116,7 +117,8 @@ nav{display:flex;gap:.5rem}
 .close-drawer{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--warm-gray)}
 .cart-items{flex:1;overflow-y:auto;padding:1rem 1.5rem}
 .cart-item{display:flex;gap:1rem;align-items:center;padding:.8rem 0;border-bottom:1px solid var(--light-sand)}
-.cart-item-img{width:60px;height:60px;background:var(--light-sand);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0}
+.cart-item-img{width:60px;height:60px;background:var(--light-sand);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden}
+.cart-item-img img{width:100%;height:100%;object-fit:cover;display:block}
 .cart-item-info{flex:1}
 .cart-item-info .name{font-size:.88rem;font-weight:500;margin-bottom:.2rem}
 .cart-item-info .meta{font-size:.75rem;color:var(--warm-gray)}
@@ -174,13 +176,13 @@ footer{background:linear-gradient(180deg,#183536 0%,#102829 100%);color:var(--sa
   <div class="hero-text">
     <span class="hero-tag">Conforto Ortopédico Premium</span>
     <h1>Cuidado que <em>acompanha</em><br>cada passo</h1>
-    <p>Calçado ortopédico premium com conforto, estabilidade e um visual elegante para o dia a dia. Pensado para quem valoriza sentir os pés nas nuvens.</p>
+    <p>Calçado ortopédico premium com conforto, estabilidade e um visual elegante para o dia a dia. Pensado para quem valoriza bem estar sem abdicar de estilo.</p>
     <button class="hero-cta" onclick="document.querySelector('.main-layout').scrollIntoView({behavior:'smooth'})">Ver Coleção KIARMED →</button>
   </div>
   <div class="hero-stats">
-    <div class="stat"><span class="num">Conforto</span><span class="label">Máximo</span></div>
-    <div class="stat"><span class="num">Palmilha</span><span class="label">5 Zonas</span></div>
-    <div class="stat"><span class="num">Qualidade</span><span class="label">Profissional e em Pele!</span></div>
+    <div class="stat"><span class="num">Coleção</span><span class="label">Premium</span></div>
+    <div class="stat"><span class="num">Conforto</span><span class="label">Diário</span></div>
+    <div class="stat"><span class="num">Apoio</span><span class="label">Profissional</span></div>
   </div>
 </div>
 
@@ -352,25 +354,30 @@ footer{background:linear-gradient(180deg,#183536 0%,#102829 100%);color:var(--sa
 
 <script>
 const products=[
-  {id:1,name:'Pantolette Wellness Especial',brand:'Premium',line:'premium',cat:'mulher',type:'pantolette',price:59.99€,colors:['bege','castanho'],sizes:[36,37,38,39,40,41],widths:['G','H','J'],img:'imagens/sapato1.jpg',ref:'REF-1020761',width:'G',badge:'Novo'},
-  {id:2,name:'Sandália Soft Comfort',brand:'Comfort',line:'comfort',cat:'mulher',type:'sandalia',price:89,colors:['azul','preto'],sizes:[36,37,38,39,40],widths:['F','G','H'],emoji:'👡',ref:'REF-1022515',width:'F'},
-  {id:3,name:'Sapatilha Classic Walk',brand:'Classic',line:'classic',cat:'mulher',type:'sapatilha',price:99,oldPrice:129,colors:['branco','cinzento'],sizes:[37,38,39,40,41,42],widths:['G','H','J','K'],emoji:'👟',ref:'REF-1022478',width:'G',badge:'Sale'},
-  {id:4,name:'Bota Ortopédica Inverno',brand:'Premium',line:'premium',cat:'mulher',type:'bota',price:189,colors:['preto','castanho'],sizes:[36,37,38,39,40,41],widths:['G','H'],emoji:'👢',ref:'REF-1022470',width:'H',badge:'Novo'},
-  {id:5,name:'Sapato Derby Elegante',brand:'Classic',line:'classic',cat:'homem',type:'sapato',price:135,colors:['preto','castanho'],sizes:[40,41,42,43,44,45],widths:['G','H','J'],emoji:'👞',ref:'REF-1020574',width:'G'},
-  {id:6,name:'Sandália Masculina Sport',brand:'Comfort',line:'comfort',cat:'homem',type:'sandalia',price:79,oldPrice:99,colors:['castanho','bege'],sizes:[40,41,42,43,44],widths:['H','J','K'],emoji:'🩴',ref:'REF-1022467',width:'H',badge:'Sale'},
-  {id:7,name:'Pantolette Relax Homem',brand:'Comfort',line:'comfort',cat:'homem',type:'pantolette',price:65,colors:['cinzento','preto'],sizes:[40,41,42,43,44,45],widths:['G','H','J','M'],emoji:'🩴',ref:'REF-1022523',width:'G'},
-  {id:8,name:'Bota Chelsea Clássica',brand:'Classic',line:'classic',cat:'homem',type:'bota',price:165,colors:['preto','castanho'],sizes:[40,41,42,43,44,45],widths:['G','H','J'],emoji:'👢',ref:'REF-1020844',width:'H',badge:'Novo'},
-  {id:9,name:'Sapatilha Corrida Ultra',brand:'Premium',line:'premium',cat:'mulher',type:'sapatilha',price:119,colors:['branco','vermelho','azul'],sizes:[36,37,38,39,40,41,42],widths:['F','G','H'],emoji:'👟',ref:'REF-1022445',width:'F'},
-  {id:10,name:'Sandália Verão Trançada',brand:'Classic',line:'classic',cat:'mulher',type:'sandalia',price:72,colors:['bege','dourado'],sizes:[36,37,38,39,40],widths:['G','H'],emoji:'👡',ref:'REF-1020855',width:'G'},
-  {id:11,name:'Mocassim Casual',brand:'Classic',line:'classic',cat:'homem',type:'sapato',price:98,colors:['castanho','preto'],sizes:[40,41,42,43,44],widths:['G','H','J'],emoji:'🥿',ref:'REF-1022451',width:'H'},
-  {id:12,name:'Palmilha Conforto Mulher',brand:'Comfort',line:'comfort',cat:'acessorios',type:'sandalia',price:25,colors:['bege'],sizes:[36,37,38,39,40,41],widths:['G'],emoji:'🧦',ref:'REF-1022475',width:'G'},
-  {id:13,name:'Palmilha Ortopédica Homem',brand:'Premium',line:'premium',cat:'acessorios',type:'pantolette',price:29,colors:['bege'],sizes:[40,41,42,43,44,45],widths:['H'],emoji:'🧦',ref:'REF-1022525',width:'H'},
-  {id:14,name:'Sapatilha Urban Style',brand:'Premium',line:'premium',cat:'homem',type:'sapatilha',price:129,oldPrice:159,colors:['branco','preto','cinzento'],sizes:[40,41,42,43,44,45],widths:['G','H','J'],emoji:'👟',ref:'REF-1022516',width:'G',badge:'Sale'},
-  {id:15,name:'Bota Ankle Inverno',brand:'Comfort',line:'comfort',cat:'mulher',type:'bota',price:149,colors:['preto','castanho','cinzento'],sizes:[36,37,38,39,40,41],widths:['G','H','J','K'],emoji:'👢',ref:'REF-1020727',width:'H'},
-  {id:16,name:'Sapato Oxford Premium',brand:'Premium',line:'premium',cat:'homem',type:'sapato',price:175,colors:['preto','castanho'],sizes:[41,42,43,44,45],widths:['G','H'],emoji:'👞',ref:'REF-1022542',width:'G',badge:'Novo'},
+  {id:1,name:'Pantolette Wellness Especial',brand:'Premium',line:'premium',cat:'mulher',type:'pantolette',price:109,colors:['bege','castanho'],sizes:[36,37,38,39,40,41],widths:['G','H','J'],img:'imagens/produto1.jpg',ref:'REF-1020761',width:'G',badge:'Novo'},
+  {id:2,name:'Sandália Soft Comfort',brand:'Comfort',line:'comfort',cat:'mulher',type:'sandalia',price:89,colors:['azul','preto'],sizes:[36,37,38,39,40],widths:['F','G','H'],img:'imagens/produto2.jpg',ref:'REF-1022515',width:'F'},
+  {id:3,name:'Sapatilha Classic Walk',brand:'Classic',line:'classic',cat:'mulher',type:'sapatilha',price:99,oldPrice:129,colors:['branco','cinzento'],sizes:[37,38,39,40,41,42],widths:['G','H','J','K'],img:'imagens/produto3.jpg',ref:'REF-1022478',width:'G',badge:'Sale'},
+  {id:4,name:'Bota Ortopédica Inverno',brand:'Premium',line:'premium',cat:'mulher',type:'bota',price:189,colors:['preto','castanho'],sizes:[36,37,38,39,40,41],widths:['G','H'],img:'imagens/produto4.jpg',ref:'REF-1022470',width:'H',badge:'Novo'},
+  {id:5,name:'Sapato Derby Elegante',brand:'Classic',line:'classic',cat:'homem',type:'sapato',price:135,colors:['preto','castanho'],sizes:[40,41,42,43,44,45],widths:['G','H','J'],img:'imagens/produto5.jpg',ref:'REF-1020574',width:'G'},
+  {id:6,name:'Sandália Masculina Sport',brand:'Comfort',line:'comfort',cat:'homem',type:'sandalia',price:79,oldPrice:99,colors:['castanho','bege'],sizes:[40,41,42,43,44],widths:['H','J','K'],img:'imagens/produto6.jpg',ref:'REF-1022467',width:'H',badge:'Sale'},
+  {id:7,name:'Pantolette Relax Homem',brand:'Comfort',line:'comfort',cat:'homem',type:'pantolette',price:65,colors:['cinzento','preto'],sizes:[40,41,42,43,44,45],widths:['G','H','J','M'],img:'imagens/produto7.jpg',ref:'REF-1022523',width:'G'},
+  {id:8,name:'Bota Chelsea Clássica',brand:'Classic',line:'classic',cat:'homem',type:'bota',price:165,colors:['preto','castanho'],sizes:[40,41,42,43,44,45],widths:['G','H','J'],img:'imagens/produto8.jpg',ref:'REF-1020844',width:'H',badge:'Novo'},
+  {id:9,name:'Sapatilha Corrida Ultra',brand:'Premium',line:'premium',cat:'mulher',type:'sapatilha',price:119,colors:['branco','vermelho','azul'],sizes:[36,37,38,39,40,41,42],widths:['F','G','H'],img:'imagens/produto9.jpg',ref:'REF-1022445',width:'F'},
+  {id:10,name:'Sandália Verão Trançada',brand:'Classic',line:'classic',cat:'mulher',type:'sandalia',price:72,colors:['bege','dourado'],sizes:[36,37,38,39,40],widths:['G','H'],img:'imagens/produto10.jpg',ref:'REF-1020855',width:'G'},
+  {id:11,name:'Mocassim Casual',brand:'Classic',line:'classic',cat:'homem',type:'sapato',price:98,colors:['castanho','preto'],sizes:[40,41,42,43,44],widths:['G','H','J'],img:'imagens/produto11.jpg',ref:'REF-1022451',width:'H'},
+  {id:12,name:'Palmilha Conforto Mulher',brand:'Comfort',line:'comfort',cat:'acessorios',type:'sandalia',price:25,colors:['bege'],sizes:[36,37,38,39,40,41],widths:['G'],img:'imagens/produto12.jpg',ref:'REF-1022475',width:'G'},
+  {id:13,name:'Palmilha Ortopédica Homem',brand:'Premium',line:'premium',cat:'acessorios',type:'pantolette',price:29,colors:['bege'],sizes:[40,41,42,43,44,45],widths:['H'],img:'imagens/produto13.jpg',ref:'REF-1022525',width:'H'},
+  {id:14,name:'Sapatilha Urban Style',brand:'Premium',line:'premium',cat:'homem',type:'sapatilha',price:129,oldPrice:159,colors:['branco','preto','cinzento'],sizes:[40,41,42,43,44,45],widths:['G','H','J'],img:'imagens/produto14.jpg',ref:'REF-1022516',width:'G',badge:'Sale'},
+  {id:15,name:'Bota Ankle Inverno',brand:'Comfort',line:'comfort',cat:'mulher',type:'bota',price:149,colors:['preto','castanho','cinzento'],sizes:[36,37,38,39,40,41],widths:['G','H','J','K'],img:'imagens/produto15.jpg',ref:'REF-1020727',width:'H'},
+  {id:16,name:'Sapato Oxford Premium',brand:'Premium',line:'premium',cat:'homem',type:'sapato',price:175,colors:['preto','castanho'],sizes:[41,42,43,44,45],widths:['G','H'],img:'imagens/produto16.jpg',ref:'REF-1022542',width:'G',badge:'Novo'},
 ];
 
 let cart=JSON.parse(localStorage.getItem('sm_cart')||'[]');
+
+cart=cart.map(i=>({
+  ...i,
+  img:i.img || (products.find(p=>p.id===i.id)?.img) || 'imagens/produto1.jpg'
+}));
 let currentProduct=null,selSize=null,selWidth=null,selColors=[],isSale=false,currentPage=1;
 const PER=12;
 
@@ -406,7 +413,7 @@ function render(){
       <div class="product-card" onclick="openModal(${p.id})">
         ${p.badge?`<div class="product-badge${p.badge==='Sale'?' sale':''}">${p.badge}</div>`:''}
         <button class="wish-btn" onclick="toggleWish(event,this)">♡</button>
-        <div class="product-img">${p.emoji}</div>
+        <div class="product-img"><img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/600x600?text=KIARMED'"></div>
         <div class="product-info">
           <div class="brand-tag">${p.brand}</div>
           <div class="product-name">${p.name}</div>
@@ -459,7 +466,7 @@ function openModal(id){
   document.getElementById('modalBrand').textContent=p.brand;
   document.getElementById('modalName').textContent=p.name;
   document.getElementById('modalRef').textContent='Ref: '+p.ref;
-  document.getElementById('modalImg').textContent=p.emoji;
+  document.getElementById('modalImg').innerHTML=`<img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/800x800?text=KIARMED'">`; 
   document.getElementById('modalPrice').innerHTML=p.oldPrice
     ?`<span style="font-size:1rem;text-decoration:line-through;color:var(--warm-gray);font-family:'DM Sans'">${fmtPrice(p.oldPrice)}</span> ${fmtPrice(p.price)}`
     :fmtPrice(p.price);
@@ -483,7 +490,7 @@ function addToCart(p,size,width){
   const key=`${p.id}-${size}-${width}`;
   const ex=cart.find(i=>i.key===key);
   if(ex)ex.qty++;
-  else cart.push({key,id:p.id,name:p.name,price:p.price,emoji:p.emoji,size,width,qty:1});
+  else cart.push({key,id:p.id,name:p.name,price:p.price,img:p.img,size,width,qty:1});
   saveCart();showToast(`✓ ${p.name} adicionado ao carrinho`);
 }
 function removeFromCart(key){cart=cart.filter(i=>i.key!==key);saveCart();renderCart();}
@@ -491,7 +498,7 @@ function saveCart(){localStorage.setItem('sm_cart',JSON.stringify(cart));documen
 function renderCart(){
   const el=document.getElementById('cartItems');
   if(!cart.length){el.innerHTML='<div class="empty-cart"><div class="icon">🛍</div><p>O seu carrinho está vazio</p></div>';document.getElementById('cartTotal').textContent='€0,00';return;}
-  el.innerHTML=cart.map(i=>`<div class="cart-item"><div class="cart-item-img">${i.emoji}</div><div class="cart-item-info"><div class="name">${i.name}</div><div class="meta">Tam. ${i.size} · Larg. ${i.width} · Qty: ${i.qty}</div></div><div class="cart-item-price">${fmtPrice(i.price*i.qty)}</div><button class="remove-item" onclick="removeFromCart('${i.key}')">🗑</button></div>`).join('');
+  el.innerHTML=cart.map(i=>`<div class="cart-item"><div class="cart-item-img"><img src="${i.img}" alt="${i.name}" onerror="this.src='https://via.placeholder.com/120x120?text=KIARMED'"></div><div class="cart-item-info"><div class="name">${i.name}</div><div class="meta">Tam. ${i.size} · Larg. ${i.width} · Qty: ${i.qty}</div></div><div class="cart-item-price">${fmtPrice(i.price*i.qty)}</div><button class="remove-item" onclick="removeFromCart('${i.key}')">🗑</button></div>`).join('');
   document.getElementById('cartTotal').textContent=fmtPrice(cart.reduce((s,i)=>s+i.price*i.qty,0));
 }
 function openCart(){document.getElementById('cartDrawer').classList.add('open');document.getElementById('cartOverlay').classList.add('open');document.body.style.overflow='hidden';renderCart();}
