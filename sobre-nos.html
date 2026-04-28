@@ -3,37 +3,99 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sobre Nós | KIARTE</title>
+<title>Sobre Nós | KIARMED</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--cream:#F4FBFA;--sand:#DFF5F3;--terracotta:#4EC7C0;--brick:#2FA39D;--charcoal:#183536;--warm-gray:#5F7C7C;--white:#FFFFFF;--border:#CBE9E7;--soft-shadow:0 10px 28px rgba(25,85,84,.10)}
-*{box-sizing:border-box;margin:0;padding:0}body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);line-height:1.75}header{position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:1.2rem 2rem;display:flex;align-items:center;justify-content:space-between;z-index:10}.brand{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;letter-spacing:.06em;color:var(--charcoal);text-decoration:none}.brand span{color:var(--brick)}nav{display:flex;gap:1rem;flex-wrap:wrap}nav a{color:var(--charcoal);text-decoration:none;font-weight:700;font-size:.9rem;padding:.55rem 1rem;border-radius:999px}nav a:hover{background:var(--sand)}.hero{background:linear-gradient(135deg,#48c9c2 0%,#8de4de 58%,#dff8f5 100%);padding:5rem 2rem;text-align:center}.hero .tag{display:inline-block;background:rgba(255,255,255,.85);padding:.35rem 1rem;border-radius:999px;text-transform:uppercase;letter-spacing:.12em;font-size:.78rem;font-weight:700;margin-bottom:1rem}.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.3rem,5vw,4rem);line-height:1.1}.wrap{max-width:980px;margin:0 auto;padding:3rem 1.5rem}.card{background:var(--white);border:1px solid var(--border);border-radius:28px;box-shadow:var(--soft-shadow);padding:2.2rem;margin-bottom:1.4rem}.card h2{font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:1rem}.card p{margin-bottom:1rem;color:#294d4e;font-size:1.02rem}.cta{display:inline-block;margin-top:1rem;background:var(--charcoal);color:white;text-decoration:none;padding:.85rem 1.4rem;border-radius:999px;font-weight:700}footer{background:#183536;color:var(--sand);padding:1.5rem 2rem;text-align:center;margin-top:2rem}footer a{color:var(--sand)}@media(max-width:650px){header{align-items:flex-start;flex-direction:column;gap:.8rem}.hero{padding:3rem 1.5rem}.card{padding:1.5rem}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);line-height:1.75}
+header{position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:1.2rem 2rem;display:flex;align-items:center;justify-content:space-between;z-index:10}
+.brand{display:flex;align-items:center;text-decoration:none}
+.brand img{height:58px;max-width:260px;object-fit:contain;display:block}
+nav{display:flex;gap:1rem;flex-wrap:wrap}
+nav a{color:var(--charcoal);text-decoration:none;font-weight:700;font-size:.9rem;padding:.55rem 1rem;border-radius:999px}
+nav a:hover{background:var(--sand)}
+.hero{background:linear-gradient(135deg,#48c9c2 0%,#8de4de 58%,#dff8f5 100%);padding:5rem 2rem;text-align:center}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.85);padding:.35rem 1rem;border-radius:999px;text-transform:uppercase;letter-spacing:.12em;font-size:.78rem;font-weight:700;margin-bottom:1rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.3rem,5vw,4rem);line-height:1.1}
+.hero p{max-width:740px;margin:1rem auto 0;color:#214748;font-size:1.05rem}
+.wrap{max-width:1080px;margin:0 auto;padding:3rem 1.5rem}
+.card{background:var(--white);border:1px solid var(--border);border-radius:28px;box-shadow:var(--soft-shadow);padding:2.2rem;margin-bottom:1.4rem}
+.card h2{font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:1rem}
+.card h3{font-family:'Playfair Display',serif;font-size:1.3rem;margin:1.4rem 0 .6rem;color:var(--charcoal)}
+.card p{margin-bottom:1rem;color:#294d4e;font-size:1.02rem}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0 0}
+.info-box{background:var(--light-sand,#EFFBFA);border:1px solid var(--border);border-radius:18px;padding:1.1rem}
+.info-box strong{display:block;color:var(--charcoal);font-size:.9rem;margin-bottom:.3rem}
+.info-box span{color:#294d4e;font-size:.95rem}
+.factory-gallery{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.4rem}
+.factory-gallery figure{background:var(--sand);border:1px solid var(--border);border-radius:22px;overflow:hidden;min-height:260px}
+.factory-gallery img{width:100%;height:100%;min-height:260px;object-fit:cover;display:block}
+.factory-gallery figcaption{padding:.75rem 1rem;font-size:.86rem;color:var(--warm-gray);background:white}
+ul.benefits{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin:1.2rem 0}
+ul.benefits li{background:var(--light-sand,#EFFBFA);border:1px solid var(--border);border-radius:16px;padding:.95rem;color:#294d4e}
+ul.benefits li strong{color:var(--charcoal)}
+.cta{display:inline-block;margin-top:1rem;background:var(--charcoal);color:white;text-decoration:none;padding:.85rem 1.4rem;border-radius:999px;font-weight:700}
+footer{background:#183536;color:var(--sand);padding:1.5rem 2rem;text-align:center;margin-top:2rem}
+footer a{color:var(--sand)}
+@media(max-width:800px){.info-grid,.factory-gallery,ul.benefits{grid-template-columns:1fr}}
+@media(max-width:650px){header{align-items:flex-start;flex-direction:column;gap:.8rem}.hero{padding:3rem 1.5rem}.card{padding:1.5rem}}
 </style>
 </head>
 <body>
 <header>
-  <a class="brand" href="index.html">KIAR<span>TE</span></a>
+  <a class="brand" href="index.html"><img src="logo.png" alt="KIARMED"></a>
   <nav><a href="index.html">Início</a><a href="sobre-nos.html">Sobre Nós</a><a href="contato.html">Contato</a></nav>
 </header>
 <section class="hero">
-  <span class="tag">Desde 1987</span>
+  <span class="tag">Fábrica de calçado desde 1987</span>
   <h1>Sobre Nós</h1>
+  <p>Somos uma fábrica portuguesa de calçado, localizada em Felgueiras, com décadas de experiência na produção de sapatos de qualidade, conforto e confiança.</p>
 </section>
 <main class="wrap">
   <section class="card">
     <h2>Sobre Nós</h2>
-    <p>Somos produtores de calçado desde 1987.</p>
-    <p>Temos experiência, conhecimento e uma equipa empenhada e altamente qualificada para a produção de sapatos de qualidade!</p>
+    <p>A KIARTE é uma fábrica de calçado em Portugal, situada em Felgueiras, que trabalha no setor desde 1987. Ao longo dos anos, construímos uma história assente na experiência, no conhecimento técnico e no cuidado colocado em cada par de sapatos que produzimos.</p>
+    <p>A fábrica está registada como KIARTE, com o número de contribuinte 501911359. Somos uma empresa aberta, séria e próxima dos nossos clientes, preparada para receber quem nos queira conhecer, visitar o nosso espaço, levantar encomendas ou realizar trocas.</p>
+    <p>O nosso horário de atendimento é das 09h00 às 12h00 e das 14h00 às 18h00, de segunda a sexta. Também enviamos encomendas por correio e oferecemos portes grátis.</p>
+
+    <div class="info-grid">
+      <div class="info-box"><strong>Localização</strong><span>Felgueiras, Portugal</span></div>
+      <div class="info-box"><strong>Desde</strong><span>1987</span></div>
+      <div class="info-box"><strong>NIF</strong><span>501911359</span></div>
+    </div>
+
+    <div class="factory-gallery">
+      <figure>
+        <img src="pavilhao1.jpg" alt="Pavilhão da fábrica KIARTE em Felgueiras">
+        <figcaption>Fábrica KIARTE em Felgueiras</figcaption>
+      </figure>
+      <figure>
+        <img src="pavilhao2.jpg" alt="Exterior do pavilhão da fábrica KIARTE">
+        <figcaption>O nosso espaço de produção e atendimento</figcaption>
+      </figure>
+    </div>
   </section>
+
   <section class="card">
     <h2>Conceito da Marca</h2>
-    <p>Após anos de criação e desenvolvimento de produtos, a KIARTE tem uma coleção muito grande e completa, da marca própria KIARFLEX, que está presente nos 5 continentes!</p>
-    <p>Temos modelos de cordão, de elástico, de fecho, de velcro e muito mais!</p>
+    <p>Após anos de criação e desenvolvimento de produtos, a KIARTE criou marcas próprias capazes de responder a diferentes necessidades do mercado. A KIARMED é uma marca desenvolvida pela KIARTE e nasce com um objetivo claro: oferecer calçado de conforto premium, pensado especialmente para quem procura bem estar, estabilidade e uma forma de caminhar mais confortável no dia a dia.</p>
+    <p>A KIARMED é direcionada para calçado ortopédico e de conforto, indicado para pessoas que têm maior sensibilidade nos pés ou problemas como joanetes, hálux valgo, dores na zona metatársica, cansaço ao caminhar ou necessidade de calçado mais fácil de calçar.</p>
+    <p>Mais do que produzir sapatos, procuramos criar soluções que respeitam o pé, acompanham o movimento e ajudam cada pessoa a sentir mais segurança, conforto e autonomia.</p>
   </section>
+
   <section class="card">
-    <h2>Produtos</h2>
-    <p>O couro é o material nobre na confeção de calçado, pela sua qualidade, originalidade e transportabilidade. O seu carácter ecológico e a sua propriedade de reciclagem são outros fatores importantes que definem essa matéria-prima de qualidade incomparável.</p>
-    <p>Para a KIARTE, não poderia ser diferente e o couro é a matéria-prima de todos os nossos produtos.</p>
+    <h3>Benefícios do calçado KIARMED</h3>
+    <ul class="benefits">
+      <li><strong>Sola antiderrapante:</strong> ajuda a aumentar a segurança ao caminhar, reduzindo o risco de escorregamento.</li>
+      <li><strong>Sola compensada:</strong> proporciona maior estabilidade, melhor distribuição do peso e mais conforto durante o uso diário.</li>
+      <li><strong>Palmilha ultra confortável:</strong> desenvolvida para oferecer apoio suave, amortecimento e sensação de bem estar ao longo do dia.</li>
+      <li><strong>Apoio metatársico:</strong> a palmilha pode incluir uma zona de apoio, conhecida como almofada ou apoio metatársico, que ajuda a aliviar a pressão na parte dianteira do pé.</li>
+      <li><strong>Fácil de calçar:</strong> os modelos são pensados com elástico, velcro ou fecho, facilitando o calçar e o ajustar ao pé.</li>
+      <li><strong>Conforto para pés sensíveis:</strong> indicado para quem procura mais espaço, adaptação e comodidade em situações como joanetes, hálux valgo ou desconforto nos pés.</li>
+    </ul>
+
+    <p>O resultado é um calçado confortável, seguro e prático, criado para pessoas que valorizam qualidade, saúde dos pés e confiança em cada passo.</p>
     <a class="cta" href="contato.html">Entrar em contacto</a>
   </section>
 </main>
