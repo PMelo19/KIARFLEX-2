@@ -205,6 +205,7 @@ footer{background:linear-gradient(180deg,#183536 0%,#102829 100%);color:var(--sa
           <option value="">— Todos —</option>
           <option value="sandalia">Sandálias</option>
           <option value="pantolette">Pantoletes</option>
+          <option value="palmilha">Palmilhas</option>
           <option value="sapatilha">Sapatilhas</option>
           <option value="bota">Botas</option>
           <option value="sapato">Sapatos Clássicos</option>
@@ -253,7 +254,7 @@ footer{background:linear-gradient(180deg,#183536 0%,#102829 100%);color:var(--sa
           <button class="size-pill" onclick="this.classList.toggle('active')">G</button>
           <button class="size-pill" onclick="this.classList.toggle('active')">H</button>
           <button class="size-pill" onclick="this.classList.toggle('active')">K</button>
-          </div>
+        </div>
       </div>
       <button class="apply-btn" onclick="resetFilters()">↺ Limpar Filtros</button>
     </div>
@@ -362,8 +363,8 @@ const products=[
   {id:9,name:'Sapatilha Corrida Ultra',brand:'Premium',line:'premium',cat:'mulher',type:'sapatilha',price:119,colors:['branco','vermelho','azul'],sizes:[36,37,38,39,40,41,42],widths:['G','H'],img:'imagens/produto9.jpg',ref:'REF-1022445',width:'G'},
   {id:10,name:'Sandália Verão Trançada',brand:'Classic',line:'classic',cat:'mulher',type:'sandalia',price:72,colors:['bege','dourado'],sizes:[36,37,38,39,40],widths:['G','H'],img:'imagens/produto10.jpg',ref:'REF-1020855',width:'G'},
   {id:11,name:'Mocassim Casual',brand:'Classic',line:'classic',cat:'homem',type:'sapato',price:98,colors:['castanho','preto'],sizes:[40,41,42,43,44],widths:['G','H'],img:'imagens/produto11.jpg',ref:'REF-1022451',width:'H'},
-  {id:12,name:'Palmilha Conforto Mulher',brand:'Comfort',line:'comfort',cat:'acessorios',type:'sandalia',price:25,colors:['bege'],sizes:[36,37,38,39,40,41],widths:['G'],img:'imagens/produto12.jpg',ref:'REF-1022475',width:'G'},
-  {id:13,name:'Palmilha Ortopédica Homem',brand:'Premium',line:'premium',cat:'acessorios',type:'pantolette',price:29,colors:['bege'],sizes:[40,41,42,43,44,45],widths:['H'],img:'imagens/produto13.jpg',ref:'REF-1022525',width:'H'},
+  {id:12,name:'Palmilha Conforto Mulher',brand:'Comfort',line:'comfort',cat:'acessorios',type:'palmilha',price:25,colors:['bege'],sizes:[36,37,38,39,40,41],widths:['G'],img:'imagens/palmilha-conforto-mulher.png',ref:'PAL-MULHER',width:'G',badge:'Novo'},
+  {id:13,name:'Palmilha Conforto Homem',brand:'Comfort',line:'comfort',cat:'acessorios',type:'palmilha',price:25,colors:['bege'],sizes:[40,41,42,43,44,45],widths:['H'],img:'imagens/palmilha-conforto-homem.png',ref:'PAL-HOMEM',width:'H',badge:'Novo'},
   {id:14,name:'Sapatilha Urban Style',brand:'Premium',line:'premium',cat:'homem',type:'sapatilha',price:129,oldPrice:159,colors:['branco','preto','cinzento'],sizes:[40,41,42,43,44,45],widths:['G','H'],img:'imagens/produto14.jpg',ref:'REF-1022516',width:'G',badge:'Sale'},
   {id:15,name:'Bota Ankle Inverno',brand:'Comfort',line:'comfort',cat:'mulher',type:'bota',price:149,colors:['preto','castanho','cinzento'],sizes:[36,37,38,39,40,41],widths:['G','H','K'],img:'imagens/produto15.jpg',ref:'REF-1020727',width:'H'},
   {id:16,name:'Sapato Oxford Premium',brand:'Premium',line:'premium',cat:'homem',type:'sapato',price:175,colors:['preto','castanho'],sizes:[41,42,43,44,45],widths:['G','H'],img:'imagens/produto16.jpg',ref:'REF-1022542',width:'G',badge:'Novo'},
