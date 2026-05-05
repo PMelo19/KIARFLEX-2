@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt">
 <head>
 <meta charset="UTF-8"/>
@@ -690,10 +690,11 @@ const STORE_EMAIL='kiarte@kiarte.pt';
 const WEB3FORMS_ACCESS_KEY='552b369e-906b-484d-b5ca-8a5cd8955481';
 const BANK_DETAILS={
   titular:'KIARTE / KIARMED',
-  iban:'PT50 0000 0000 0000 0000 0000 0',
-  bic:'BIC/SWIFT A DEFINIR'
+  iban:'PT50 0007 0238 0019 6510 0073 7',
+  banco:'NOVO BANCO',
+  bic:'BESCPTPLOPR'
 };
-const MBWAY_PHONE='+351 255 340 320';
+const MBWAY_PHONE='+351 914 030 295';
 let selectedPayment='bank';
 
 function checkout(){
@@ -735,6 +736,7 @@ function renderPaymentInfo(){
   if(selectedPayment==='bank'){
     el.innerHTML=`<strong>Dados para transferência bancária</strong><br>
       Titular: ${BANK_DETAILS.titular}<br>
+      Banco: ${BANK_DETAILS.banco}<br>
       IBAN: ${BANK_DETAILS.iban}<br>
       BIC/SWIFT: ${BANK_DETAILS.bic}<br>
       Valor a pagar: <strong>${total}</strong><br>
@@ -757,7 +759,7 @@ function buildOrderPayload(){
   const notes=document.getElementById('customerNotes').value.trim();
   const country=getSelectedCountry();
   const paymentText=selectedPayment==='bank'
-    ? `Transferência bancária\nTitular: ${BANK_DETAILS.titular}\nIBAN: ${BANK_DETAILS.iban}\nBIC/SWIFT: ${BANK_DETAILS.bic}`
+    ? `Transferência bancária\nTitular: ${BANK_DETAILS.titular}\nBanco: ${BANK_DETAILS.banco}\nIBAN: ${BANK_DETAILS.iban}\nBIC/SWIFT: ${BANK_DETAILS.bic}`
     : `MB WAY\nNúmero: ${MBWAY_PHONE}`;
   const orderNumber='KIA-'+Date.now();
   const subject=`Nova encomenda KIARMED - ${orderNumber} - ${name}`;
