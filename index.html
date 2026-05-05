@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt">
 <head>
 <meta charset="UTF-8"/>
@@ -221,7 +221,11 @@ footer{background:linear-gradient(180deg,#183536 0%,#102829 100%);color:var(--sa
 .payment-info{margin-top:.9rem;background:white;border:1.5px dashed var(--terracotta);border-radius:14px;padding:.9rem;font-size:.86rem;color:var(--charcoal);line-height:1.55}
 .email-order-btn{width:100%;background:var(--terracotta);color:white;border:none;border-radius:12px;padding:.95rem;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;margin-top:1rem}
 .email-order-btn:hover{background:var(--brick)}
+.email-order-btn:disabled{opacity:.65;cursor:not-allowed}
 .checkout-note{font-size:.78rem;color:var(--warm-gray);line-height:1.45;margin-top:.75rem}
+.order-result{display:none;margin-top:.9rem;border-radius:14px;padding:.85rem;font-size:.86rem;line-height:1.5}
+.order-result.success{display:block;background:#e8faf6;border:1px solid #9bded4;color:#183536}
+.order-result.error{display:block;background:#fff2f2;border:1px solid #e4a3a3;color:#7a1f1f}
 @media(max-width:700px){.country-grid,.lang-options{grid-template-columns:1fr 1fr}.cookie-banner{flex-direction:column;align-items:flex-start}.checkout-content{grid-template-columns:1fr}}
 
 @media(max-width:900px){.main-layout{grid-template-columns:1fr}.sidebar{position:static}.hero{padding:3rem 1.5rem;flex-direction:column;gap:2rem}.hero-stats{justify-content:center}.modal-body{grid-template-columns:1fr}.modal-img{border-radius:16px 16px 0 0}.footer-grid{grid-template-columns:1fr 1fr}}
@@ -494,8 +498,9 @@ footer{background:linear-gradient(180deg,#183536 0%,#102829 100%);color:var(--sa
         </div>
 
         <div class="payment-info" id="paymentInfo"></div>
-        <button class="email-order-btn" onclick="sendOrderEmail()">Enviar encomenda</button>
-        <p class="checkout-note">Neste momento o botão envia a encomenda por e-mail. Se preferir, pode ligar o site a um sistema automático para receber as encomendas sem depender do programa de e-mail do cliente.</p>
+        <button class="email-order-btn" id="submitOrderBtn" onclick="submitOrderWeb3Forms()">Confirmar encomenda</button>
+        <div class="order-result" id="orderResult"></div>
+        <p class="checkout-note">Ao confirmar, a encomenda é enviada automaticamente para o e-mail da loja. O cliente não precisa de abrir Gmail, Outlook ou outro programa de e-mail.</p>
       </div>
     </div>
   </div>
@@ -682,6 +687,7 @@ function openCart(){document.getElementById('cartDrawer').classList.add('open');
 function closeCart(){document.getElementById('cartDrawer').classList.remove('open');document.getElementById('cartOverlay').classList.remove('open');document.body.style.overflow='';}
 
 const STORE_EMAIL='kiarte@kiarte.pt';
+const WEB3FORMS_ACCESS_KEY='552b369e-906b-484d-b5ca-8a5cd8955481';
 const BANK_DETAILS={
   titular:'KIARTE / KIARMED',
   iban:'PT50 0000 0000 0000 0000 0000 0',
@@ -743,24 +749,79 @@ function renderPaymentInfo(){
 function getOrderLines(){
   return cart.map(i=>`- ${i.qty}x ${i.name} | Tamanho: ${i.size} | Largura: ${i.width} | Preço: ${fmtPrice(i.price*i.qty)}`).join('\n');
 }
-function sendOrderEmail(){
+function buildOrderPayload(){
   const name=document.getElementById('customerName').value.trim();
   const email=document.getElementById('customerEmail').value.trim();
   const phone=document.getElementById('customerPhone').value.trim();
   const address=document.getElementById('customerAddress').value.trim();
   const notes=document.getElementById('customerNotes').value.trim();
-  if(!name||!email||!phone||!address){
-    showToast('Preencha nome, email, telefone e morada.');
-    return;
-  }
+  const country=getSelectedCountry();
   const paymentText=selectedPayment==='bank'
     ? `Transferência bancária\nTitular: ${BANK_DETAILS.titular}\nIBAN: ${BANK_DETAILS.iban}\nBIC/SWIFT: ${BANK_DETAILS.bic}`
     : `MB WAY\nNúmero: ${MBWAY_PHONE}`;
-
-  const subject=`Nova encomenda KIARMED - ${name}`;
-  const body=`Nova encomenda KIARMED\n\nDADOS DO CLIENTE\nNome: ${name}\nEmail: ${email}\nTelefone: ${phone}\nMorada:\n${address}\n\nARTIGOS\n${getOrderLines()}\n\nTOTAL: ${fmtPrice(cartTotal())}\n\nMÉTODO DE PAGAMENTO\n${paymentText}\n\nOBSERVAÇÕES\n${notes || 'Sem observações'}\n\nNota: Confirmar pagamento antes de enviar a encomenda.`;
-  window.location.href=`mailto:${STORE_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  showToast('Confirme o envio no seu programa de e-mail.');
+  const orderNumber='KIA-'+Date.now();
+  const subject=`Nova encomenda KIARMED - ${orderNumber} - ${name}`;
+  const message=`Nova encomenda KIARMED\n\nNº ENCOMENDA: ${orderNumber}\n\nDADOS DO CLIENTE\nNome: ${name}\nEmail: ${email}\nTelefone: ${phone}\nPaís de entrega: ${country.flag} ${country.label}\nMorada:\n${address}\n\nARTIGOS\n${getOrderLines()}\n\nTOTAL: ${fmtPrice(cartTotal())}\n\nMÉTODO DE PAGAMENTO\n${paymentText}\n\nOBSERVAÇÕES\n${notes || 'Sem observações'}\n\nNota: Confirmar pagamento antes de enviar a encomenda.`;
+  return {name,email,phone,address,notes,country,paymentText,orderNumber,subject,message};
+}
+function showOrderResult(type,msg){
+  const el=document.getElementById('orderResult');
+  el.className='order-result '+type;
+  el.innerHTML=msg;
+}
+async function submitOrderWeb3Forms(){
+  const payload=buildOrderPayload();
+  if(!payload.name||!payload.email||!payload.phone||!payload.address){
+    showToast('Preencha nome, email, telefone e morada.');
+    showOrderResult('error','Preencha os campos obrigatórios: nome, email, telefone e morada.');
+    return;
+  }
+  if(WEB3FORMS_ACCESS_KEY==='COLOCA_AQUI_A_TUA_ACCESS_KEY'){
+    showOrderResult('error','Falta configurar a Access Key do Web3Forms no código. Substitua COLOCA_AQUI_A_TUA_ACCESS_KEY pela chave recebida por e-mail.');
+    return;
+  }
+  const btn=document.getElementById('submitOrderBtn');
+  btn.disabled=true;
+  btn.textContent='A enviar encomenda...';
+  showOrderResult('success','A enviar a encomenda. Aguarde um momento...');
+  try{
+    const response=await fetch('https://api.web3forms.com/submit',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({
+        access_key:WEB3FORMS_ACCESS_KEY,
+        subject:payload.subject,
+        from_name:'KIARMED Loja Online',
+        name:payload.name,
+        email:payload.email,
+        telefone:payload.phone,
+        pais_entrega:`${payload.country.flag} ${payload.country.label}`,
+        morada:payload.address,
+        artigos:getOrderLines(),
+        total:fmtPrice(cartTotal()),
+        metodo_pagamento:selectedPayment==='bank'?'Transferência bancária':'MB WAY',
+        dados_pagamento:payload.paymentText,
+        observacoes:payload.notes || 'Sem observações',
+        message:payload.message,
+        botcheck:false
+      })
+    });
+    const data=await response.json();
+    if(response.ok && data.success){
+      showOrderResult('success',`Encomenda enviada com sucesso!<br><strong>Nº ${payload.orderNumber}</strong><br>A encomenda foi enviada para a loja. O cliente deve fazer o pagamento pelo método escolhido.`);
+      showToast('Encomenda enviada com sucesso!');
+      cart=[];
+      saveCart();
+      renderCart();
+    }else{
+      showOrderResult('error','Não foi possível enviar a encomenda. Tente novamente ou contacte a loja.');
+    }
+  }catch(e){
+    showOrderResult('error','Erro ao enviar. Verifique a ligação à internet e tente novamente.');
+  }finally{
+    btn.disabled=false;
+    btn.textContent='Confirmar encomenda';
+  }
 }
 
 const COUNTRY_CONFIG={
