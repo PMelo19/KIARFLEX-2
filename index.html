@@ -209,6 +209,7 @@ footer{background:linear-gradient(180deg,#183536 0%,#102829 100%);color:var(--sa
 .checkout-total{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--charcoal);margin-top:.7rem}
 .checkout-form{display:grid;gap:.65rem}
 .checkout-form input,.checkout-form textarea{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:.7rem .85rem;font-family:'DM Sans',sans-serif;font-size:.9rem;background:white;color:var(--charcoal)}
+.checkout-form input.invalid,.checkout-form textarea.invalid{border-color:#c93636;background:#fff6f6}
 .checkout-form textarea{min-height:80px;resize:vertical}
 .payment-options{display:grid;gap:.7rem}
 .payment-card{background:white;border:1.5px solid var(--border);border-radius:14px;padding:.9rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:space-between;gap:.9rem}
@@ -226,6 +227,13 @@ footer{background:linear-gradient(180deg,#183536 0%,#102829 100%);color:var(--sa
 .order-result{display:none;margin-top:.9rem;border-radius:14px;padding:.85rem;font-size:.86rem;line-height:1.5}
 .order-result.success{display:block;background:#e8faf6;border:1px solid #9bded4;color:#183536}
 .order-result.error{display:block;background:#fff2f2;border:1px solid #e4a3a3;color:#7a1f1f}
+.checkout-success{display:none;padding:2.3rem 1.8rem;text-align:center}
+.checkout-success.open{display:block}
+.checkout-success-icon{width:76px;height:76px;border-radius:50%;background:#e8faf0;color:#159447;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:2.1rem;font-weight:900;border:2px solid #a8e6bf}
+.checkout-success h3{font-family:'Playfair Display',serif;font-size:1.8rem;color:#159447;margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.04em}
+.checkout-success p{color:var(--warm-gray);font-size:.95rem;line-height:1.6;max-width:620px;margin:.35rem auto}
+.checkout-success .payment-reminder{margin-top:1rem;background:var(--light-sand);border:1px solid var(--border);border-radius:16px;padding:1rem;color:var(--charcoal);text-align:left}
+.checkout-success .payment-reminder strong{color:var(--charcoal)}
 @media(max-width:700px){.country-grid,.lang-options{grid-template-columns:1fr 1fr}.cookie-banner{flex-direction:column;align-items:flex-start}.checkout-content{grid-template-columns:1fr}}
 
 @media(max-width:900px){.main-layout{grid-template-columns:1fr}.sidebar{position:static}.hero{padding:3rem 1.5rem;flex-direction:column;gap:2rem}.hero-stats{justify-content:center}.modal-body{grid-template-columns:1fr}.modal-img{border-radius:16px 16px 0 0}.footer-grid{grid-template-columns:1fr 1fr}}
@@ -244,7 +252,7 @@ footer{background:linear-gradient(180deg,#183536 0%,#102829 100%);color:var(--sa
   </nav>
   <div class="header-actions">
     <button class="cart-btn" onclick="openCart()">
-      🛒 Carrinho <span class="cart-count" id="cartCount">0</span>
+      Carrinho <span class="cart-count" id="cartCount">0</span>
     </button>
   </div>
 </header>
@@ -390,7 +398,7 @@ footer{background:linear-gradient(180deg,#183536 0%,#102829 100%);color:var(--sa
 <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
 <div class="cart-drawer" id="cartDrawer">
   <div class="cart-drawer-header">
-    <h3>🛍 Carrinho</h3>
+    <h3>Carrinho</h3>
     <button class="close-drawer" onclick="closeCart()">✕</button>
   </div>
   <div class="cart-items" id="cartItems"></div>
@@ -464,14 +472,14 @@ footer{background:linear-gradient(180deg,#183536 0%,#102829 100%);color:var(--sa
       <h3>Finalizar Encomenda</h3>
       <button class="checkout-close" onclick="closeCheckout()">✕</button>
     </div>
-    <div class="checkout-content">
+    <div class="checkout-content" id="checkoutContent">
       <div class="checkout-box">
         <h4>Dados do cliente</h4>
         <div class="checkout-form">
-          <input id="customerName" type="text" placeholder="Nome completo *">
-          <input id="customerEmail" type="email" placeholder="Email *">
-          <input id="customerPhone" type="tel" placeholder="Telefone / Telemóvel *">
-          <textarea id="customerAddress" placeholder="Morada de entrega *"></textarea>
+          <input id="customerName" type="text" placeholder="Nome completo *" required>
+          <input id="customerEmail" type="email" placeholder="Email *" required>
+          <input id="customerPhone" type="tel" placeholder="Telefone / Telemóvel *" required>
+          <textarea id="customerAddress" placeholder="Morada de entrega *" required></textarea>
           <textarea id="customerNotes" placeholder="Observações adicionais"></textarea>
         </div>
       </div>
@@ -502,6 +510,13 @@ footer{background:linear-gradient(180deg,#183536 0%,#102829 100%);color:var(--sa
         <div class="order-result" id="orderResult"></div>
         <p class="checkout-note">Ao confirmar, a encomenda é enviada automaticamente para o e-mail da loja. O cliente não precisa de abrir Gmail, Outlook ou outro programa de e-mail.</p>
       </div>
+    </div>
+    <div class="checkout-success" id="checkoutSuccess">
+      <div class="checkout-success-icon">✓</div>
+      <h3>Encomenda feita com sucesso</h3>
+      <p>A sua encomenda foi enviada para a loja.</p>
+      <p><strong>Agora falta fazer o pagamento para a encomenda ficar confirmada.</strong></p>
+      <div class="payment-reminder" id="successPaymentInfo"></div>
     </div>
   </div>
 </div>
@@ -679,8 +694,8 @@ function removeFromCart(key){cart=cart.filter(i=>i.key!==key);saveCart();renderC
 function saveCart(){localStorage.setItem('sm_cart',JSON.stringify(cart));document.getElementById('cartCount').textContent=cart.reduce((s,i)=>s+i.qty,0);}
 function renderCart(){
   const el=document.getElementById('cartItems');
-  if(!cart.length){el.innerHTML='<div class="empty-cart"><div class="icon">🛍</div><p>O seu carrinho está vazio</p></div>';document.getElementById('cartTotal').textContent='€0,00';return;}
-  el.innerHTML=cart.map(i=>`<div class="cart-item"><div class="cart-item-img"><img src="${i.img}" alt="${i.name}" onerror="this.src='https://via.placeholder.com/120x120?text=KIARMED'"></div><div class="cart-item-info"><div class="name">${i.name}</div><div class="meta">Tam. ${i.size} · Larg. ${i.width} · Qty: ${i.qty}</div></div><div class="cart-item-price">${fmtPrice(i.price*i.qty)}</div><button class="remove-item" onclick="removeFromCart('${i.key}')">🗑</button></div>`).join('');
+  if(!cart.length){el.innerHTML='<div class="empty-cart"><p>O seu carrinho está vazio</p></div>';document.getElementById('cartTotal').textContent='€0,00';return;}
+  el.innerHTML=cart.map(i=>`<div class="cart-item"><div class="cart-item-img"><img src="${i.img}" alt="${i.name}" onerror="this.src='https://via.placeholder.com/120x120?text=KIARMED'"></div><div class="cart-item-info"><div class="name">${i.name}</div><div class="meta">Tam. ${i.size} · Larg. ${i.width} · Qty: ${i.qty}</div></div><div class="cart-item-price">${fmtPrice(i.price*i.qty)}</div><button class="remove-item" onclick="removeFromCart('${i.key}')">✕</button></div>`).join('');
   document.getElementById('cartTotal').textContent=fmtPrice(cart.reduce((s,i)=>s+i.price*i.qty,0));
 }
 function openCart(){document.getElementById('cartDrawer').classList.add('open');document.getElementById('cartOverlay').classList.add('open');document.body.style.overflow='hidden';renderCart();}
@@ -705,6 +720,12 @@ function checkout(){
 
 function openCheckout(){
   renderCheckout();
+  const content=document.getElementById('checkoutContent');
+  const success=document.getElementById('checkoutSuccess');
+  const result=document.getElementById('orderResult');
+  if(content)content.style.display='grid';
+  if(success)success.classList.remove('open');
+  if(result){result.className='order-result';result.innerHTML='';}
   document.getElementById('checkoutOverlay').classList.add('open');
   document.body.style.overflow='hidden';
 }
@@ -771,11 +792,62 @@ function showOrderResult(type,msg){
   el.className='order-result '+type;
   el.innerHTML=msg;
 }
+function validateCustomerFields(){
+  const fields=[
+    {id:'customerName',label:'nome'},
+    {id:'customerPhone',label:'telefone'},
+    {id:'customerEmail',label:'email'},
+    {id:'customerAddress',label:'morada'}
+  ];
+  let firstInvalid=null;
+  fields.forEach(f=>{
+    const el=document.getElementById(f.id);
+    const empty=!el.value.trim();
+    const emailInvalid=f.id==='customerEmail' && el.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim());
+    const invalid=empty||emailInvalid;
+    el.classList.toggle('invalid',invalid);
+    if(invalid&&!firstInvalid)firstInvalid=el;
+  });
+  if(firstInvalid){
+    firstInvalid.focus();
+    showToast('Preencha nome, telefone, email e morada antes de confirmar.');
+    showOrderResult('error','Antes de confirmar a encomenda, preencha obrigatoriamente: nome, telefone, email e morada.');
+    return false;
+  }
+  return true;
+}
+function showCheckoutSuccess(payload){
+  const content=document.getElementById('checkoutContent');
+  const success=document.getElementById('checkoutSuccess');
+  const info=document.getElementById('successPaymentInfo');
+  const total=fmtPrice(cartTotal());
+  let paymentHtml='';
+  if(selectedPayment==='bank'){
+    paymentHtml=`<strong>Pagamento por transferência bancária</strong><br>
+      Valor a pagar: <strong>${total}</strong><br>
+      Titular: ${BANK_DETAILS.titular}<br>
+      Banco: ${BANK_DETAILS.banco}<br>
+      IBAN: ${BANK_DETAILS.iban}<br>
+      BIC/SWIFT: ${BANK_DETAILS.bic}<br>
+      Referência: ${payload.name}`;
+  }else{
+    paymentHtml=`<strong>Pagamento por MB WAY</strong><br>
+      Valor a pagar: <strong>${total}</strong><br>
+      Número: ${MBWAY_PHONE}<br>
+      Referência: ${payload.name}`;
+  }
+  if(info){
+    info.innerHTML=`<strong>Nº da encomenda: ${payload.orderNumber}</strong><br><br>${paymentHtml}<br><br>Depois de o pagamento ser confirmado, a encomenda será preparada e enviada.`;
+  }
+  if(content)content.style.display='none';
+  if(success)success.classList.add('open');
+}
 async function submitOrderWeb3Forms(){
+  if(!validateCustomerFields())return;
   const payload=buildOrderPayload();
   if(!payload.name||!payload.email||!payload.phone||!payload.address){
-    showToast('Preencha nome, email, telefone e morada.');
-    showOrderResult('error','Preencha os campos obrigatórios: nome, email, telefone e morada.');
+    showToast('Preencha nome, telefone, email e morada.');
+    showOrderResult('error','Preencha os campos obrigatórios: nome, telefone, email e morada.');
     return;
   }
   if(WEB3FORMS_ACCESS_KEY==='COLOCA_AQUI_A_TUA_ACCESS_KEY'){
@@ -810,8 +882,8 @@ async function submitOrderWeb3Forms(){
     });
     const data=await response.json();
     if(response.ok && data.success){
-      showOrderResult('success',`Encomenda enviada com sucesso!<br><strong>Nº ${payload.orderNumber}</strong><br>A encomenda foi enviada para a loja. O cliente deve fazer o pagamento pelo método escolhido.`);
-      showToast('Encomenda enviada com sucesso!');
+      showCheckoutSuccess(payload);
+      showToast('Encomenda feita com sucesso!');
       cart=[];
       saveCart();
       renderCart();
