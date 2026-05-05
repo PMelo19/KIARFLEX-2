@@ -152,15 +152,31 @@ footer{background:linear-gradient(180deg,#183536 0%,#102829 100%);color:var(--sa
 .toast.show{transform:translateX(-50%) translateY(0)}
 
 /* Language popup */
-.lang-overlay{position:fixed;inset:0;background:rgba(24,53,54,.45);backdrop-filter:blur(4px);z-index:600;display:none;align-items:center;justify-content:center;padding:1rem}
+.lang-overlay{position:fixed;inset:0;background:rgba(24,53,54,.52);backdrop-filter:blur(5px);z-index:600;display:none;align-items:center;justify-content:center;padding:1rem}
 .lang-overlay.open{display:flex}
-.lang-modal{background:white;border-radius:22px;padding:2rem;max-width:520px;width:100%;box-shadow:0 24px 70px rgba(25,85,84,.25);border:1px solid var(--border);text-align:center}
-.lang-modal h2{font-family:'Playfair Display',serif;font-size:1.55rem;margin-bottom:.45rem;color:var(--charcoal)}
-.lang-modal p{color:var(--warm-gray);font-size:.92rem;line-height:1.5;margin-bottom:1.3rem}
-.lang-options{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem}
-.lang-btn{background:var(--light-sand);border:1.5px solid var(--border);border-radius:16px;padding:.85rem .4rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:700;color:var(--charcoal);transition:all .2s}
-.lang-btn:hover{border-color:var(--terracotta);transform:translateY(-2px);box-shadow:var(--soft-shadow)}
-.lang-btn .flag{display:block;font-size:2rem;margin-bottom:.25rem}
+.lang-modal{background:white;border-radius:24px;padding:2rem;max-width:680px;width:100%;box-shadow:0 24px 70px rgba(25,85,84,.25);border:1px solid var(--border);text-align:left;position:relative}
+.lang-close{position:absolute;top:1rem;right:1rem;border:none;background:none;color:var(--warm-gray);font-size:1.6rem;cursor:pointer;line-height:1}
+.lang-badge{width:52px;height:52px;border-radius:16px;background:var(--light-sand);display:flex;align-items:center;justify-content:center;font-size:1.7rem;margin-bottom:1rem;border:1px solid var(--border)}
+.lang-modal h2{font-family:'Playfair Display',serif;font-size:1.7rem;margin-bottom:.45rem;color:var(--charcoal)}
+.lang-modal p{color:var(--warm-gray);font-size:.94rem;line-height:1.55;margin-bottom:1.1rem}
+.region-block{margin-top:1.1rem}
+.region-block h3{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--warm-gray);margin-bottom:.7rem}
+.country-grid,.lang-options{display:grid;gap:.75rem}
+.country-grid{grid-template-columns:repeat(2,1fr)}
+.lang-options{grid-template-columns:repeat(4,1fr)}
+.region-option{background:#fff;border:1.5px solid var(--border);border-radius:18px;padding:.9rem .8rem;cursor:pointer;display:flex;align-items:center;gap:.75rem;transition:all .2s;font-family:'DM Sans',sans-serif;color:var(--charcoal);text-align:left}
+.region-option:hover{border-color:var(--terracotta);transform:translateY(-2px);box-shadow:var(--soft-shadow)}
+.region-option.active{border-color:var(--terracotta);background:var(--light-sand);box-shadow:0 10px 28px rgba(25,85,84,.10)}
+.region-option .flag{font-size:1.9rem;line-height:1;flex-shrink:0}
+.region-option .option-text{display:flex;flex-direction:column;gap:.15rem}
+.region-option .title{font-weight:700;font-size:.95rem}
+.region-option .sub{font-size:.8rem;color:var(--warm-gray)}
+.region-option.lang-pill{justify-content:center;flex-direction:column;gap:.35rem;padding:.95rem .4rem;text-align:center}
+.region-option.lang-pill .option-text{display:block}
+.region-option.lang-pill .title{font-size:.9rem}
+.region-summary{margin-top:1rem;padding:.9rem 1rem;border-radius:16px;background:var(--light-sand);border:1px solid var(--border);font-size:.9rem;color:var(--charcoal);line-height:1.5}
+.region-confirm-btn{margin-top:1.1rem;width:100%;background:var(--charcoal);color:white;border:none;border-radius:999px;padding:.95rem 1.1rem;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:all .2s}
+.region-confirm-btn:hover{background:var(--terracotta);transform:translateY(-1px)}
 
 /* Cookies */
 .cookie-banner{position:fixed;left:1rem;right:1rem;bottom:1rem;background:white;border:1px solid var(--border);box-shadow:0 12px 34px rgba(25,85,84,.16);border-radius:18px;padding:1rem 1.2rem;z-index:550;display:none;align-items:center;justify-content:space-between;gap:1rem}
@@ -182,20 +198,31 @@ footer{background:linear-gradient(180deg,#183536 0%,#102829 100%);color:var(--sa
 .checkout-box{background:var(--light-sand);border:1px solid var(--border);border-radius:18px;padding:1rem}
 .checkout-box h4{font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.8rem;color:var(--charcoal)}
 .checkout-summary{font-size:.86rem;color:var(--warm-gray);line-height:1.6;margin-bottom:.8rem}
+.checkout-item{display:flex;gap:.75rem;align-items:center;padding:.55rem 0}
+.checkout-item+.checkout-item{border-top:1px solid var(--border)}
+.checkout-item-img{width:64px;height:64px;border-radius:12px;background:white;border:1px solid var(--border);overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.checkout-item-img img{width:100%;height:100%;object-fit:cover;display:block}
+.checkout-item-info{min-width:0;flex:1}
+.checkout-item-name{font-weight:700;color:var(--charcoal);font-size:.9rem;line-height:1.3;margin-bottom:.15rem}
+.checkout-item-meta{font-size:.79rem;color:var(--warm-gray);line-height:1.45}
+.checkout-item-price{font-weight:700;color:var(--charcoal);font-size:.88rem;white-space:nowrap}
 .checkout-total{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--charcoal);margin-top:.7rem}
 .checkout-form{display:grid;gap:.65rem}
 .checkout-form input,.checkout-form textarea{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:.7rem .85rem;font-family:'DM Sans',sans-serif;font-size:.9rem;background:white;color:var(--charcoal)}
 .checkout-form textarea{min-height:80px;resize:vertical}
 .payment-options{display:grid;gap:.7rem}
-.payment-card{background:white;border:1.5px solid var(--border);border-radius:14px;padding:.8rem;cursor:pointer;transition:all .2s}
+.payment-card{background:white;border:1.5px solid var(--border);border-radius:14px;padding:.9rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:space-between;gap:.9rem}
 .payment-card:hover,.payment-card.active{border-color:var(--terracotta);box-shadow:var(--soft-shadow)}
+.payment-card-text{flex:1}
 .payment-card strong{display:block;margin-bottom:.25rem;color:var(--charcoal)}
 .payment-card span{display:block;font-size:.82rem;color:var(--warm-gray);line-height:1.45}
+.payment-card-logo{width:70px;height:44px;border-radius:10px;background:var(--light-sand);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:.35rem}
+.payment-card-logo img{max-width:100%;max-height:100%;object-fit:contain;display:block}
 .payment-info{margin-top:.9rem;background:white;border:1.5px dashed var(--terracotta);border-radius:14px;padding:.9rem;font-size:.86rem;color:var(--charcoal);line-height:1.55}
 .email-order-btn{width:100%;background:var(--terracotta);color:white;border:none;border-radius:12px;padding:.95rem;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;margin-top:1rem}
 .email-order-btn:hover{background:var(--brick)}
 .checkout-note{font-size:.78rem;color:var(--warm-gray);line-height:1.45;margin-top:.75rem}
-@media(max-width:700px){.lang-options{grid-template-columns:1fr 1fr}.cookie-banner{flex-direction:column;align-items:flex-start}.checkout-content{grid-template-columns:1fr}}
+@media(max-width:700px){.country-grid,.lang-options{grid-template-columns:1fr 1fr}.cookie-banner{flex-direction:column;align-items:flex-start}.checkout-content{grid-template-columns:1fr}}
 
 @media(max-width:900px){.main-layout{grid-template-columns:1fr}.sidebar{position:static}.hero{padding:3rem 1.5rem;flex-direction:column;gap:2rem}.hero-stats{justify-content:center}.modal-body{grid-template-columns:1fr}.modal-img{border-radius:16px 16px 0 0}.footer-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){header{padding:0 1rem}.main-layout{padding:1rem}.cart-drawer{width:100%}.footer-grid{grid-template-columns:1fr}footer{padding:2rem 1.5rem 1rem}nav{display:none}}
@@ -375,14 +402,45 @@ footer{background:linear-gradient(180deg,#183536 0%,#102829 100%);color:var(--sa
 <!-- LANGUAGE POPUP -->
 <div class="lang-overlay" id="languageOverlay">
   <div class="lang-modal">
-    <h2>Escolha o idioma</h2>
-    <p>Selecione a língua em que pretende navegar no site.</p>
-    <div class="lang-options">
-      <button class="lang-btn" onclick="selectLanguage('pt')"><span class="flag">🇵🇹</span>Português</button>
-      <button class="lang-btn" onclick="selectLanguage('es')"><span class="flag">🇪🇸</span>Español</button>
-      <button class="lang-btn" onclick="selectLanguage('fr')"><span class="flag">🇫🇷</span>Français</button>
-      <button class="lang-btn" onclick="selectLanguage('en')"><span class="flag">🇬🇧</span>English</button>
+    <button class="lang-close" type="button" onclick="confirmRegionalSettings()">✕</button>
+    <div class="lang-badge">🌍</div>
+    <h2>Escolha o país e o idioma</h2>
+    <p>Selecione o país de entrega e a língua em que pretende navegar. Isto ajuda a identificar o destino da encomenda e torna a experiência mais clara para o cliente.</p>
+
+    <div class="region-block">
+      <h3>País de entrega</h3>
+      <div class="country-grid">
+        <button class="region-option country-option" id="country-pt" type="button" onclick="selectCountry('pt')">
+          <span class="flag">🇵🇹</span>
+          <span class="option-text"><span class="title">Portugal</span><span class="sub">Entregas em Portugal</span></span>
+        </button>
+        <button class="region-option country-option" id="country-es" type="button" onclick="selectCountry('es')">
+          <span class="flag">🇪🇸</span>
+          <span class="option-text"><span class="title">Espanha</span><span class="sub">Entregas em Espanha</span></span>
+        </button>
+        <button class="region-option country-option" id="country-fr" type="button" onclick="selectCountry('fr')">
+          <span class="flag">🇫🇷</span>
+          <span class="option-text"><span class="title">França</span><span class="sub">Entregas em França</span></span>
+        </button>
+        <button class="region-option country-option" id="country-gb" type="button" onclick="selectCountry('gb')">
+          <span class="flag">🇬🇧</span>
+          <span class="option-text"><span class="title">Reino Unido</span><span class="sub">Entregas no Reino Unido</span></span>
+        </button>
+      </div>
     </div>
+
+    <div class="region-block">
+      <h3>Idioma</h3>
+      <div class="lang-options">
+        <button class="region-option lang-pill" id="lang-pt" type="button" onclick="selectLanguage('pt')"><span class="flag">🇵🇹</span><span class="option-text"><span class="title">Português</span></span></button>
+        <button class="region-option lang-pill" id="lang-es" type="button" onclick="selectLanguage('es')"><span class="flag">🇪🇸</span><span class="option-text"><span class="title">Español</span></span></button>
+        <button class="region-option lang-pill" id="lang-fr" type="button" onclick="selectLanguage('fr')"><span class="flag">🇫🇷</span><span class="option-text"><span class="title">Français</span></span></button>
+        <button class="region-option lang-pill" id="lang-en" type="button" onclick="selectLanguage('en')"><span class="flag">🇬🇧</span><span class="option-text"><span class="title">English</span></span></button>
+      </div>
+    </div>
+
+    <div class="region-summary" id="regionSummary"></div>
+    <button class="region-confirm-btn" type="button" onclick="confirmRegionalSettings()">Continuar</button>
   </div>
 </div>
 
@@ -420,18 +478,24 @@ footer{background:linear-gradient(180deg,#183536 0%,#102829 100%);color:var(--sa
 
         <div class="payment-options">
           <div class="payment-card active" id="paymentBank" onclick="selectPayment('bank')">
-            <strong>1. Transferência bancária</strong>
-            <span>O cliente faz a transferência para os dados indicados e a encomenda segue após confirmação do pagamento.</span>
+            <div class="payment-card-text">
+              <strong>1. Transferência bancária</strong>
+              <span>O cliente faz a transferência para os dados indicados e a encomenda segue após confirmação do pagamento.</span>
+            </div>
+            <div class="payment-card-logo"><img src="imagens/transferencia-bancaria.png" alt="Transferência bancária" onerror="this.style.display='none';this.parentElement.innerHTML='🏦';this.parentElement.style.fontSize='1.5rem'"/></div>
           </div>
           <div class="payment-card" id="paymentMbway" onclick="selectPayment('mbway')">
-            <strong>2. MB WAY</strong>
-            <span>O cliente faz o pagamento por MB WAY para o número indicado, com o valor total da encomenda.</span>
+            <div class="payment-card-text">
+              <strong>2. MB WAY</strong>
+              <span>O cliente faz o pagamento por MB WAY para o número indicado, com o valor total da encomenda.</span>
+            </div>
+            <div class="payment-card-logo"><img src="imagens/mbway.png" alt="MB WAY" onerror="this.style.display='none';this.parentElement.innerHTML='📱';this.parentElement.style.fontSize='1.5rem'"/></div>
           </div>
         </div>
 
         <div class="payment-info" id="paymentInfo"></div>
-        <button class="email-order-btn" onclick="sendOrderEmail()">Enviar encomenda por e-mail</button>
-        <p class="checkout-note">Ao clicar, será aberto o programa de e-mail do cliente com a encomenda preenchida. Confirme sempre o pagamento antes de enviar a encomenda.</p>
+        <button class="email-order-btn" onclick="sendOrderEmail()">Enviar encomenda</button>
+        <p class="checkout-note">Neste momento o botão envia a encomenda por e-mail. Se preferir, pode ligar o site a um sistema automático para receber as encomendas sem depender do programa de e-mail do cliente.</p>
       </div>
     </div>
   </div>
@@ -652,7 +716,10 @@ function cartTotal(){
 }
 function renderCheckout(){
   const summary=document.getElementById('checkoutSummary');
-  summary.innerHTML=cart.map(i=>`${i.qty}x ${i.name}<br><small>Tam. ${i.size} · Larg. ${i.width} · ${fmtPrice(i.price*i.qty)}</small>`).join('<hr style="border:none;border-top:1px solid var(--border);margin:.55rem 0">');
+  const country=getSelectedCountry();
+  const regionBox=`<div style="margin-bottom:.7rem;padding:.75rem .85rem;background:var(--light-sand);border:1px solid var(--border);border-radius:12px;font-size:.88rem">País de entrega selecionado: <strong>${country.flag} ${country.label}</strong></div>`;
+  const itemsHtml=cart.map(i=>`<div class="checkout-item"><div class="checkout-item-img"><img src="${i.img}" alt="${i.name}" onerror="this.src='https://via.placeholder.com/120x120?text=KIARMED'"></div><div class="checkout-item-info"><div class="checkout-item-name">${i.qty}x ${i.name}</div><div class="checkout-item-meta">Tam. ${i.size} · Larg. ${i.width}</div></div><div class="checkout-item-price">${fmtPrice(i.price*i.qty)}</div></div>`).join('');
+  summary.innerHTML=regionBox + itemsHtml;
   document.getElementById('checkoutTotal').textContent='Total: '+fmtPrice(cartTotal());
   renderPaymentInfo();
 }
@@ -696,17 +763,65 @@ function sendOrderEmail(){
   showToast('Confirme o envio no seu programa de e-mail.');
 }
 
+const COUNTRY_CONFIG={
+  pt:{flag:'🇵🇹',label:'Portugal'},
+  es:{flag:'🇪🇸',label:'Espanha'},
+  fr:{flag:'🇫🇷',label:'França'},
+  gb:{flag:'🇬🇧',label:'Reino Unido'}
+};
+const LANGUAGE_CONFIG={pt:'Português',es:'Español',fr:'Français',en:'English'};
+let selectedCountry=localStorage.getItem('kiarmed_country')||'pt';
+let selectedLanguage=localStorage.getItem('kiarmed_lang')||'pt';
+
+function getSelectedCountry(){
+  return COUNTRY_CONFIG[localStorage.getItem('kiarmed_country')||selectedCountry||'pt'];
+}
+function updateRegionSummary(){
+  const country=COUNTRY_CONFIG[selectedCountry]||COUNTRY_CONFIG.pt;
+  const lang=LANGUAGE_CONFIG[selectedLanguage]||LANGUAGE_CONFIG.pt;
+  const summary=document.getElementById('regionSummary');
+  if(summary){
+    summary.innerHTML=`Seleção atual: <strong>${country.flag} ${country.label}</strong> · <strong>${lang}</strong>`;
+  }
+}
+function updateRegionButtons(){
+  Object.keys(COUNTRY_CONFIG).forEach(code=>{
+    const el=document.getElementById('country-'+code);
+    if(el)el.classList.toggle('active',code===selectedCountry);
+  });
+  Object.keys(LANGUAGE_CONFIG).forEach(code=>{
+    const el=document.getElementById('lang-'+code);
+    if(el)el.classList.toggle('active',code===selectedLanguage);
+  });
+  updateRegionSummary();
+}
+function selectCountry(code){
+  selectedCountry=code;
+  localStorage.setItem('kiarmed_country',code);
+  updateRegionButtons();
+}
 function selectLanguage(lang){
+  selectedLanguage=lang;
   localStorage.setItem('kiarmed_lang',lang);
   document.documentElement.lang=lang;
+  updateRegionButtons();
+}
+function confirmRegionalSettings(){
+  localStorage.setItem('kiarmed_country',selectedCountry);
+  localStorage.setItem('kiarmed_lang',selectedLanguage);
+  document.documentElement.lang=selectedLanguage;
   document.getElementById('languageOverlay').classList.remove('open');
-  const names={pt:'Português',es:'Español',fr:'Français',en:'English'};
-  showToast(`Idioma selecionado: ${names[lang]}`);
+  const country=COUNTRY_CONFIG[selectedCountry];
+  showToast(`Selecionado: ${country.flag} ${country.label} · ${LANGUAGE_CONFIG[selectedLanguage]}`);
 }
 function showLanguagePopupIfNeeded(){
-  const lang=localStorage.getItem('kiarmed_lang');
-  if(lang){document.documentElement.lang=lang;return;}
-  document.getElementById('languageOverlay').classList.add('open');
+  selectedCountry=localStorage.getItem('kiarmed_country')||'pt';
+  selectedLanguage=localStorage.getItem('kiarmed_lang')||'pt';
+  document.documentElement.lang=selectedLanguage;
+  updateRegionButtons();
+  if(!localStorage.getItem('kiarmed_country')||!localStorage.getItem('kiarmed_lang')){
+    document.getElementById('languageOverlay').classList.add('open');
+  }
 }
 function setCookieConsent(value){
   localStorage.setItem('kiarmed_cookie_consent',value);
