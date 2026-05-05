@@ -208,9 +208,10 @@ footer{background:linear-gradient(180deg,#183536 0%,#102829 100%);color:var(--sa
 .checkout-item-price{font-weight:700;color:var(--charcoal);font-size:.88rem;white-space:nowrap}
 .checkout-total{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--charcoal);margin-top:.7rem}
 .checkout-form{display:grid;gap:.65rem}
-.checkout-form input,.checkout-form textarea{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:.7rem .85rem;font-family:'DM Sans',sans-serif;font-size:.9rem;background:white;color:var(--charcoal)}
-.checkout-form input.invalid,.checkout-form textarea.invalid{border-color:#c93636;background:#fff6f6}
+.checkout-form input,.checkout-form textarea,.checkout-form select{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:.7rem .85rem;font-family:'DM Sans',sans-serif;font-size:.9rem;background:white;color:var(--charcoal)}
+.checkout-form input.invalid,.checkout-form textarea.invalid,.checkout-form select.invalid{border-color:#c93636;background:#fff6f6}
 .checkout-form textarea{min-height:80px;resize:vertical}
+.checkout-address-row{display:grid;grid-template-columns:1fr 120px;gap:.65rem}
 .payment-options{display:grid;gap:.7rem}
 .payment-card{background:white;border:1.5px solid var(--border);border-radius:14px;padding:.9rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:space-between;gap:.9rem}
 .payment-card:hover,.payment-card.active{border-color:var(--terracotta);box-shadow:var(--soft-shadow)}
@@ -232,9 +233,10 @@ footer{background:linear-gradient(180deg,#183536 0%,#102829 100%);color:var(--sa
 .checkout-success-icon{width:76px;height:76px;border-radius:50%;background:#e8faf0;color:#159447;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:2.1rem;font-weight:900;border:2px solid #a8e6bf}
 .checkout-success h3{font-family:'Playfair Display',serif;font-size:1.8rem;color:#159447;margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.04em}
 .checkout-success p{color:var(--warm-gray);font-size:.95rem;line-height:1.6;max-width:620px;margin:.35rem auto}
+.checkout-success .payment-warning{color:#c93636;font-weight:800}
 .checkout-success .payment-reminder{margin-top:1rem;background:var(--light-sand);border:1px solid var(--border);border-radius:16px;padding:1rem;color:var(--charcoal);text-align:left}
 .checkout-success .payment-reminder strong{color:var(--charcoal)}
-@media(max-width:700px){.country-grid,.lang-options{grid-template-columns:1fr 1fr}.cookie-banner{flex-direction:column;align-items:flex-start}.checkout-content{grid-template-columns:1fr}}
+@media(max-width:700px){.country-grid,.lang-options{grid-template-columns:1fr 1fr}.cookie-banner{flex-direction:column;align-items:flex-start}.checkout-content{grid-template-columns:1fr}.checkout-address-row{grid-template-columns:1fr}}
 
 @media(max-width:900px){.main-layout{grid-template-columns:1fr}.sidebar{position:static}.hero{padding:3rem 1.5rem;flex-direction:column;gap:2rem}.hero-stats{justify-content:center}.modal-body{grid-template-columns:1fr}.modal-img{border-radius:16px 16px 0 0}.footer-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){header{padding:0 1rem}.main-layout{padding:1rem}.cart-drawer{width:100%}.footer-grid{grid-template-columns:1fr}footer{padding:2rem 1.5rem 1rem}nav{display:none}}
@@ -479,7 +481,17 @@ footer{background:linear-gradient(180deg,#183536 0%,#102829 100%);color:var(--sa
           <input id="customerName" type="text" placeholder="Nome completo *" required>
           <input id="customerEmail" type="email" placeholder="Email *" required>
           <input id="customerPhone" type="tel" placeholder="Telefone / Telemóvel *" required>
-          <textarea id="customerAddress" placeholder="Morada de entrega *" required></textarea>
+          <input id="customerStreet" type="text" placeholder="Rua *" required>
+          <div class="checkout-address-row">
+            <input id="customerPostal" type="text" placeholder="Código postal *" required>
+            <input id="customerDoorNumber" type="text" placeholder="Nº *" required>
+          </div>
+          <input id="customerDistrict" type="text" placeholder="Distrito *" required>
+          <select id="customerCountry" required onchange="renderCheckout()">
+            <option value="pt">Portugal</option>
+            <option value="es">Espanha</option>
+            <option value="fr">França</option>
+          </select>
           <textarea id="customerNotes" placeholder="Observações adicionais"></textarea>
         </div>
       </div>
@@ -515,7 +527,7 @@ footer{background:linear-gradient(180deg,#183536 0%,#102829 100%);color:var(--sa
       <div class="checkout-success-icon">✓</div>
       <h3>Encomenda feita com sucesso</h3>
       <p>A sua encomenda foi enviada para a loja.</p>
-      <p><strong>Agora falta fazer o pagamento para a encomenda ficar confirmada.</strong></p>
+      <p class="payment-warning">Agora falta fazer o pagamento para a encomenda ficar confirmada.</p>
       <div class="payment-reminder" id="successPaymentInfo"></div>
     </div>
   </div>
@@ -719,6 +731,11 @@ function checkout(){
 }
 
 function openCheckout(){
+  const countrySelect=document.getElementById('customerCountry');
+  if(countrySelect){
+    const stored=localStorage.getItem('kiarmed_country')||selectedCountry||'pt';
+    countrySelect.value=['pt','es','fr'].includes(stored)?stored:'pt';
+  }
   renderCheckout();
   const content=document.getElementById('checkoutContent');
   const success=document.getElementById('checkoutSuccess');
@@ -742,17 +759,42 @@ function selectPayment(method){
 function cartTotal(){
   return cart.reduce((s,i)=>s+i.price*i.qty,0);
 }
+function getCheckoutCountryCode(){
+  const el=document.getElementById('customerCountry');
+  if(el&&el.value)return el.value;
+  const stored=localStorage.getItem('kiarmed_country')||selectedCountry||'pt';
+  return ['pt','es','fr'].includes(stored)?stored:'pt';
+}
+function getShippingCost(){
+  const country=getCheckoutCountryCode();
+  const subtotal=cartTotal();
+  if(country==='pt')return subtotal>=50?0:3.99;
+  if(country==='es')return 5.99;
+  if(country==='fr')return 7.99;
+  return 0;
+}
+function orderTotal(){
+  return cartTotal()+getShippingCost();
+}
+function getCheckoutCountry(){
+  const code=getCheckoutCountryCode();
+  const labels={pt:{flag:'🇵🇹',label:'Portugal'},es:{flag:'🇪🇸',label:'Espanha'},fr:{flag:'🇫🇷',label:'França'}};
+  return labels[code]||labels.pt;
+}
 function renderCheckout(){
   const summary=document.getElementById('checkoutSummary');
-  const country=getSelectedCountry();
+  const country=getCheckoutCountry();
+  const shipping=getShippingCost();
   const regionBox=`<div style="margin-bottom:.7rem;padding:.75rem .85rem;background:var(--light-sand);border:1px solid var(--border);border-radius:12px;font-size:.88rem">País de entrega selecionado: <strong>${country.flag} ${country.label}</strong></div>`;
   const itemsHtml=cart.map(i=>`<div class="checkout-item"><div class="checkout-item-img"><img src="${i.img}" alt="${i.name}" onerror="this.src='https://via.placeholder.com/120x120?text=KIARMED'"></div><div class="checkout-item-info"><div class="checkout-item-name">${i.qty}x ${i.name}</div><div class="checkout-item-meta">Tam. ${i.size} · Larg. ${i.width}</div></div><div class="checkout-item-price">${fmtPrice(i.price*i.qty)}</div></div>`).join('');
-  summary.innerHTML=regionBox + itemsHtml;
-  document.getElementById('checkoutTotal').textContent='Total: '+fmtPrice(cartTotal());
+  const shippingHtml=`<div style="border-top:1px solid var(--border);margin-top:.65rem;padding-top:.65rem;font-size:.9rem;color:var(--charcoal)"><div style="display:flex;justify-content:space-between;margin-bottom:.25rem"><span>Subtotal</span><strong>${fmtPrice(cartTotal())}</strong></div><div style="display:flex;justify-content:space-between"><span>Portes de envio</span><strong>${shipping===0?'Grátis':fmtPrice(shipping)}</strong></div></div>`;
+  summary.innerHTML=regionBox + itemsHtml + shippingHtml;
+  document.getElementById('checkoutTotal').textContent='Total: '+fmtPrice(orderTotal());
   renderPaymentInfo();
 }
 function renderPaymentInfo(){
-  const total=fmtPrice(cartTotal());
+  const total=fmtPrice(orderTotal());
+  const shipping=getShippingCost();
   const el=document.getElementById('paymentInfo');
   if(selectedPayment==='bank'){
     el.innerHTML=`<strong>Dados para transferência bancária</strong><br>
@@ -760,11 +802,13 @@ function renderPaymentInfo(){
       Banco: ${BANK_DETAILS.banco}<br>
       IBAN: ${BANK_DETAILS.iban}<br>
       BIC/SWIFT: ${BANK_DETAILS.bic}<br>
+      Portes de envio: <strong>${shipping===0?'Grátis':fmtPrice(shipping)}</strong><br>
       Valor a pagar: <strong>${total}</strong><br>
       Referência: Nome do cliente`;
   }else{
     el.innerHTML=`<strong>Dados para pagamento MB WAY</strong><br>
       Número: ${MBWAY_PHONE}<br>
+      Portes de envio: <strong>${shipping===0?'Grátis':fmtPrice(shipping)}</strong><br>
       Valor a pagar: <strong>${total}</strong><br>
       Referência: Nome do cliente`;
   }
@@ -776,16 +820,55 @@ function buildOrderPayload(){
   const name=document.getElementById('customerName').value.trim();
   const email=document.getElementById('customerEmail').value.trim();
   const phone=document.getElementById('customerPhone').value.trim();
-  const address=document.getElementById('customerAddress').value.trim();
+  const street=document.getElementById('customerStreet').value.trim();
+  const doorNumber=document.getElementById('customerDoorNumber').value.trim();
+  const postal=document.getElementById('customerPostal').value.trim();
+  const district=document.getElementById('customerDistrict').value.trim();
+  const country=getCheckoutCountry();
   const notes=document.getElementById('customerNotes').value.trim();
-  const country=getSelectedCountry();
+  const address=`Rua: ${street}
+Nº: ${doorNumber}
+Código postal: ${postal}
+Distrito: ${district}
+País: ${country.label}`;
+  const shipping=getShippingCost();
   const paymentText=selectedPayment==='bank'
-    ? `Transferência bancária\nTitular: ${BANK_DETAILS.titular}\nBanco: ${BANK_DETAILS.banco}\nIBAN: ${BANK_DETAILS.iban}\nBIC/SWIFT: ${BANK_DETAILS.bic}`
-    : `MB WAY\nNúmero: ${MBWAY_PHONE}`;
+    ? `Transferência bancária
+Titular: ${BANK_DETAILS.titular}
+Banco: ${BANK_DETAILS.banco}
+IBAN: ${BANK_DETAILS.iban}
+BIC/SWIFT: ${BANK_DETAILS.bic}`
+    : `MB WAY
+Número: ${MBWAY_PHONE}`;
   const orderNumber='KIA-'+Date.now();
   const subject=`Nova encomenda KIARMED - ${orderNumber} - ${name}`;
-  const message=`Nova encomenda KIARMED\n\nNº ENCOMENDA: ${orderNumber}\n\nDADOS DO CLIENTE\nNome: ${name}\nEmail: ${email}\nTelefone: ${phone}\nPaís de entrega: ${country.flag} ${country.label}\nMorada:\n${address}\n\nARTIGOS\n${getOrderLines()}\n\nTOTAL: ${fmtPrice(cartTotal())}\n\nMÉTODO DE PAGAMENTO\n${paymentText}\n\nOBSERVAÇÕES\n${notes || 'Sem observações'}\n\nNota: Confirmar pagamento antes de enviar a encomenda.`;
-  return {name,email,phone,address,notes,country,paymentText,orderNumber,subject,message};
+  const message=`Nova encomenda KIARMED
+
+Nº ENCOMENDA: ${orderNumber}
+
+DADOS DO CLIENTE
+Nome: ${name}
+Email: ${email}
+Telefone: ${phone}
+País de entrega: ${country.flag} ${country.label}
+Morada:
+${address}
+
+ARTIGOS
+${getOrderLines()}
+
+SUBTOTAL: ${fmtPrice(cartTotal())}
+PORTES DE ENVIO: ${shipping===0?'Grátis':fmtPrice(shipping)}
+TOTAL: ${fmtPrice(orderTotal())}
+
+MÉTODO DE PAGAMENTO
+${paymentText}
+
+OBSERVAÇÕES
+${notes || 'Sem observações'}
+
+Nota: Confirmar pagamento antes de enviar a encomenda.`;
+  return {name,email,phone,street,doorNumber,postal,district,address,notes,country,shipping,paymentText,orderNumber,subject,message};
 }
 function showOrderResult(type,msg){
   const el=document.getElementById('orderResult');
@@ -797,7 +880,11 @@ function validateCustomerFields(){
     {id:'customerName',label:'nome'},
     {id:'customerPhone',label:'telefone'},
     {id:'customerEmail',label:'email'},
-    {id:'customerAddress',label:'morada'}
+    {id:'customerStreet',label:'rua'},
+    {id:'customerDoorNumber',label:'número'},
+    {id:'customerPostal',label:'código postal'},
+    {id:'customerDistrict',label:'distrito'},
+    {id:'customerCountry',label:'país'}
   ];
   let firstInvalid=null;
   fields.forEach(f=>{
@@ -810,8 +897,8 @@ function validateCustomerFields(){
   });
   if(firstInvalid){
     firstInvalid.focus();
-    showToast('Preencha nome, telefone, email e morada antes de confirmar.');
-    showOrderResult('error','Antes de confirmar a encomenda, preencha obrigatoriamente: nome, telefone, email e morada.');
+    showToast('Preencha todos os dados obrigatórios antes de confirmar.');
+    showOrderResult('error','Antes de confirmar a encomenda, preencha obrigatoriamente: nome, telefone, email, rua, número, código postal, distrito e país.');
     return false;
   }
   return true;
@@ -820,10 +907,13 @@ function showCheckoutSuccess(payload){
   const content=document.getElementById('checkoutContent');
   const success=document.getElementById('checkoutSuccess');
   const info=document.getElementById('successPaymentInfo');
-  const total=fmtPrice(cartTotal());
+  const total=fmtPrice(orderTotal());
+  const shipping=getShippingCost();
   let paymentHtml='';
   if(selectedPayment==='bank'){
     paymentHtml=`<strong>Pagamento por transferência bancária</strong><br>
+      Subtotal: <strong>${fmtPrice(cartTotal())}</strong><br>
+      Portes de envio: <strong>${shipping===0?'Grátis':fmtPrice(shipping)}</strong><br>
       Valor a pagar: <strong>${total}</strong><br>
       Titular: ${BANK_DETAILS.titular}<br>
       Banco: ${BANK_DETAILS.banco}<br>
@@ -832,6 +922,8 @@ function showCheckoutSuccess(payload){
       Referência: ${payload.name}`;
   }else{
     paymentHtml=`<strong>Pagamento por MB WAY</strong><br>
+      Subtotal: <strong>${fmtPrice(cartTotal())}</strong><br>
+      Portes de envio: <strong>${shipping===0?'Grátis':fmtPrice(shipping)}</strong><br>
       Valor a pagar: <strong>${total}</strong><br>
       Número: ${MBWAY_PHONE}<br>
       Referência: ${payload.name}`;
@@ -872,7 +964,9 @@ async function submitOrderWeb3Forms(){
         pais_entrega:`${payload.country.flag} ${payload.country.label}`,
         morada:payload.address,
         artigos:getOrderLines(),
-        total:fmtPrice(cartTotal()),
+        subtotal:fmtPrice(cartTotal()),
+        portes_envio:getShippingCost()===0?'Grátis':fmtPrice(getShippingCost()),
+        total:fmtPrice(orderTotal()),
         metodo_pagamento:selectedPayment==='bank'?'Transferência bancária':'MB WAY',
         dados_pagamento:payload.paymentText,
         observacoes:payload.notes || 'Sem observações',
