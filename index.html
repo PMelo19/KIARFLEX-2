@@ -150,6 +150,53 @@ footer{background:linear-gradient(180deg,#183536 0%,#102829 100%);color:var(--sa
 .pay-icon{background:#3a3a3a;border-radius:4px;padding:.3rem .6rem;font-size:.7rem;font-weight:700;color:var(--sand);letter-spacing:.05em}
 .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--charcoal);color:var(--cream);padding:.8rem 1.5rem;border-radius:30px;font-size:.9rem;font-weight:500;z-index:400;transition:transform .3s cubic-bezier(.4,0,.2,1);white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.25)}
 .toast.show{transform:translateX(-50%) translateY(0)}
+
+/* Language popup */
+.lang-overlay{position:fixed;inset:0;background:rgba(24,53,54,.45);backdrop-filter:blur(4px);z-index:600;display:none;align-items:center;justify-content:center;padding:1rem}
+.lang-overlay.open{display:flex}
+.lang-modal{background:white;border-radius:22px;padding:2rem;max-width:520px;width:100%;box-shadow:0 24px 70px rgba(25,85,84,.25);border:1px solid var(--border);text-align:center}
+.lang-modal h2{font-family:'Playfair Display',serif;font-size:1.55rem;margin-bottom:.45rem;color:var(--charcoal)}
+.lang-modal p{color:var(--warm-gray);font-size:.92rem;line-height:1.5;margin-bottom:1.3rem}
+.lang-options{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem}
+.lang-btn{background:var(--light-sand);border:1.5px solid var(--border);border-radius:16px;padding:.85rem .4rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:700;color:var(--charcoal);transition:all .2s}
+.lang-btn:hover{border-color:var(--terracotta);transform:translateY(-2px);box-shadow:var(--soft-shadow)}
+.lang-btn .flag{display:block;font-size:2rem;margin-bottom:.25rem}
+
+/* Cookies */
+.cookie-banner{position:fixed;left:1rem;right:1rem;bottom:1rem;background:white;border:1px solid var(--border);box-shadow:0 12px 34px rgba(25,85,84,.16);border-radius:18px;padding:1rem 1.2rem;z-index:550;display:none;align-items:center;justify-content:space-between;gap:1rem}
+.cookie-banner.open{display:flex}
+.cookie-banner p{font-size:.85rem;color:var(--warm-gray);line-height:1.45}
+.cookie-actions{display:flex;gap:.6rem;flex-shrink:0}
+.cookie-btn{border:none;border-radius:999px;padding:.65rem 1rem;font-family:'DM Sans',sans-serif;font-weight:700;cursor:pointer}
+.cookie-btn.accept{background:var(--terracotta);color:white}
+.cookie-btn.decline{background:var(--light-sand);color:var(--charcoal);border:1px solid var(--border)}
+
+/* Checkout */
+.checkout-overlay{display:none;position:fixed;inset:0;z-index:650;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:1rem}
+.checkout-overlay.open{display:flex}
+.checkout-modal{background:white;border-radius:24px;max-width:920px;width:100%;max-height:92vh;overflow-y:auto;box-shadow:0 30px 80px rgba(25,85,84,.25);border:1px solid var(--border);position:relative}
+.checkout-modal-header{padding:1.4rem 1.6rem;border-bottom:1px solid var(--sand);display:flex;justify-content:space-between;align-items:center}
+.checkout-modal-header h3{font-family:'Playfair Display',serif;font-size:1.35rem}
+.checkout-close{background:var(--cream);border:none;border-radius:50%;width:36px;height:36px;font-size:1.1rem;cursor:pointer}
+.checkout-content{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;padding:1.6rem}
+.checkout-box{background:var(--light-sand);border:1px solid var(--border);border-radius:18px;padding:1rem}
+.checkout-box h4{font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.8rem;color:var(--charcoal)}
+.checkout-summary{font-size:.86rem;color:var(--warm-gray);line-height:1.6;margin-bottom:.8rem}
+.checkout-total{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--charcoal);margin-top:.7rem}
+.checkout-form{display:grid;gap:.65rem}
+.checkout-form input,.checkout-form textarea{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:.7rem .85rem;font-family:'DM Sans',sans-serif;font-size:.9rem;background:white;color:var(--charcoal)}
+.checkout-form textarea{min-height:80px;resize:vertical}
+.payment-options{display:grid;gap:.7rem}
+.payment-card{background:white;border:1.5px solid var(--border);border-radius:14px;padding:.8rem;cursor:pointer;transition:all .2s}
+.payment-card:hover,.payment-card.active{border-color:var(--terracotta);box-shadow:var(--soft-shadow)}
+.payment-card strong{display:block;margin-bottom:.25rem;color:var(--charcoal)}
+.payment-card span{display:block;font-size:.82rem;color:var(--warm-gray);line-height:1.45}
+.payment-info{margin-top:.9rem;background:white;border:1.5px dashed var(--terracotta);border-radius:14px;padding:.9rem;font-size:.86rem;color:var(--charcoal);line-height:1.55}
+.email-order-btn{width:100%;background:var(--terracotta);color:white;border:none;border-radius:12px;padding:.95rem;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;margin-top:1rem}
+.email-order-btn:hover{background:var(--brick)}
+.checkout-note{font-size:.78rem;color:var(--warm-gray);line-height:1.45;margin-top:.75rem}
+@media(max-width:700px){.lang-options{grid-template-columns:1fr 1fr}.cookie-banner{flex-direction:column;align-items:flex-start}.checkout-content{grid-template-columns:1fr}}
+
 @media(max-width:900px){.main-layout{grid-template-columns:1fr}.sidebar{position:static}.hero{padding:3rem 1.5rem;flex-direction:column;gap:2rem}.hero-stats{justify-content:center}.modal-body{grid-template-columns:1fr}.modal-img{border-radius:16px 16px 0 0}.footer-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){header{padding:0 1rem}.main-layout{padding:1rem}.cart-drawer{width:100%}.footer-grid{grid-template-columns:1fr}footer{padding:2rem 1.5rem 1rem}nav{display:none}}
 </style>
@@ -324,6 +371,72 @@ footer{background:linear-gradient(180deg,#183536 0%,#102829 100%);color:var(--sa
 </div>
 
 <div class="toast" id="toast"></div>
+
+<!-- LANGUAGE POPUP -->
+<div class="lang-overlay" id="languageOverlay">
+  <div class="lang-modal">
+    <h2>Escolha o idioma</h2>
+    <p>Selecione a língua em que pretende navegar no site.</p>
+    <div class="lang-options">
+      <button class="lang-btn" onclick="selectLanguage('pt')"><span class="flag">🇵🇹</span>Português</button>
+      <button class="lang-btn" onclick="selectLanguage('es')"><span class="flag">🇪🇸</span>Español</button>
+      <button class="lang-btn" onclick="selectLanguage('fr')"><span class="flag">🇫🇷</span>Français</button>
+      <button class="lang-btn" onclick="selectLanguage('en')"><span class="flag">🇬🇧</span>English</button>
+    </div>
+  </div>
+</div>
+
+<!-- COOKIES -->
+<div class="cookie-banner" id="cookieBanner">
+  <p>Este site utiliza cookies para melhorar a sua experiência de navegação. Pode aceitar ou recusar a utilização de cookies não essenciais.</p>
+  <div class="cookie-actions">
+    <button class="cookie-btn decline" onclick="setCookieConsent('declined')">Não aceito</button>
+    <button class="cookie-btn accept" onclick="setCookieConsent('accepted')">Aceito</button>
+  </div>
+</div>
+
+<!-- CHECKOUT -->
+<div class="checkout-overlay" id="checkoutOverlay" onclick="if(event.target===this)closeCheckout()">
+  <div class="checkout-modal">
+    <div class="checkout-modal-header">
+      <h3>Finalizar Encomenda</h3>
+      <button class="checkout-close" onclick="closeCheckout()">✕</button>
+    </div>
+    <div class="checkout-content">
+      <div class="checkout-box">
+        <h4>Dados do cliente</h4>
+        <div class="checkout-form">
+          <input id="customerName" type="text" placeholder="Nome completo *">
+          <input id="customerEmail" type="email" placeholder="Email *">
+          <input id="customerPhone" type="tel" placeholder="Telefone / Telemóvel *">
+          <textarea id="customerAddress" placeholder="Morada de entrega *"></textarea>
+          <textarea id="customerNotes" placeholder="Observações adicionais"></textarea>
+        </div>
+      </div>
+      <div class="checkout-box">
+        <h4>Resumo e pagamento</h4>
+        <div class="checkout-summary" id="checkoutSummary"></div>
+        <div class="checkout-total" id="checkoutTotal"></div>
+
+        <div class="payment-options">
+          <div class="payment-card active" id="paymentBank" onclick="selectPayment('bank')">
+            <strong>1. Transferência bancária</strong>
+            <span>O cliente faz a transferência para os dados indicados e a encomenda segue após confirmação do pagamento.</span>
+          </div>
+          <div class="payment-card" id="paymentMbway" onclick="selectPayment('mbway')">
+            <strong>2. MB WAY</strong>
+            <span>O cliente faz o pagamento por MB WAY para o número indicado, com o valor total da encomenda.</span>
+          </div>
+        </div>
+
+        <div class="payment-info" id="paymentInfo"></div>
+        <button class="email-order-btn" onclick="sendOrderEmail()">Enviar encomenda por e-mail</button>
+        <p class="checkout-note">Ao clicar, será aberto o programa de e-mail do cliente com a encomenda preenchida. Confirme sempre o pagamento antes de enviar a encomenda.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <footer>
   <div class="footer-grid">
@@ -503,11 +616,112 @@ function renderCart(){
 }
 function openCart(){document.getElementById('cartDrawer').classList.add('open');document.getElementById('cartOverlay').classList.add('open');document.body.style.overflow='hidden';renderCart();}
 function closeCart(){document.getElementById('cartDrawer').classList.remove('open');document.getElementById('cartOverlay').classList.remove('open');document.body.style.overflow='';}
-function checkout(){if(!cart.length){showToast('Carrinho vazio!');return;}showToast('🎉 Encomenda simulada! Obrigado pela compra.');cart=[];saveCart();renderCart();closeCart();}
+
+const STORE_EMAIL='kiarte@kiarte.pt';
+const BANK_DETAILS={
+  titular:'KIARTE / KIARMED',
+  iban:'PT50 0000 0000 0000 0000 0000 0',
+  bic:'BIC/SWIFT A DEFINIR'
+};
+const MBWAY_PHONE='+351 255 340 320';
+let selectedPayment='bank';
+
+function checkout(){
+  if(!cart.length){showToast('Carrinho vazio!');return;}
+  closeCart();
+  openCheckout();
+}
+
+function openCheckout(){
+  renderCheckout();
+  document.getElementById('checkoutOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeCheckout(){
+  document.getElementById('checkoutOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function selectPayment(method){
+  selectedPayment=method;
+  document.getElementById('paymentBank').classList.toggle('active',method==='bank');
+  document.getElementById('paymentMbway').classList.toggle('active',method==='mbway');
+  renderPaymentInfo();
+}
+function cartTotal(){
+  return cart.reduce((s,i)=>s+i.price*i.qty,0);
+}
+function renderCheckout(){
+  const summary=document.getElementById('checkoutSummary');
+  summary.innerHTML=cart.map(i=>`${i.qty}x ${i.name}<br><small>Tam. ${i.size} · Larg. ${i.width} · ${fmtPrice(i.price*i.qty)}</small>`).join('<hr style="border:none;border-top:1px solid var(--border);margin:.55rem 0">');
+  document.getElementById('checkoutTotal').textContent='Total: '+fmtPrice(cartTotal());
+  renderPaymentInfo();
+}
+function renderPaymentInfo(){
+  const total=fmtPrice(cartTotal());
+  const el=document.getElementById('paymentInfo');
+  if(selectedPayment==='bank'){
+    el.innerHTML=`<strong>Dados para transferência bancária</strong><br>
+      Titular: ${BANK_DETAILS.titular}<br>
+      IBAN: ${BANK_DETAILS.iban}<br>
+      BIC/SWIFT: ${BANK_DETAILS.bic}<br>
+      Valor a pagar: <strong>${total}</strong><br>
+      Referência: Nome do cliente`;
+  }else{
+    el.innerHTML=`<strong>Dados para pagamento MB WAY</strong><br>
+      Número: ${MBWAY_PHONE}<br>
+      Valor a pagar: <strong>${total}</strong><br>
+      Referência: Nome do cliente`;
+  }
+}
+function getOrderLines(){
+  return cart.map(i=>`- ${i.qty}x ${i.name} | Tamanho: ${i.size} | Largura: ${i.width} | Preço: ${fmtPrice(i.price*i.qty)}`).join('\n');
+}
+function sendOrderEmail(){
+  const name=document.getElementById('customerName').value.trim();
+  const email=document.getElementById('customerEmail').value.trim();
+  const phone=document.getElementById('customerPhone').value.trim();
+  const address=document.getElementById('customerAddress').value.trim();
+  const notes=document.getElementById('customerNotes').value.trim();
+  if(!name||!email||!phone||!address){
+    showToast('Preencha nome, email, telefone e morada.');
+    return;
+  }
+  const paymentText=selectedPayment==='bank'
+    ? `Transferência bancária\nTitular: ${BANK_DETAILS.titular}\nIBAN: ${BANK_DETAILS.iban}\nBIC/SWIFT: ${BANK_DETAILS.bic}`
+    : `MB WAY\nNúmero: ${MBWAY_PHONE}`;
+
+  const subject=`Nova encomenda KIARMED - ${name}`;
+  const body=`Nova encomenda KIARMED\n\nDADOS DO CLIENTE\nNome: ${name}\nEmail: ${email}\nTelefone: ${phone}\nMorada:\n${address}\n\nARTIGOS\n${getOrderLines()}\n\nTOTAL: ${fmtPrice(cartTotal())}\n\nMÉTODO DE PAGAMENTO\n${paymentText}\n\nOBSERVAÇÕES\n${notes || 'Sem observações'}\n\nNota: Confirmar pagamento antes de enviar a encomenda.`;
+  window.location.href=`mailto:${STORE_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  showToast('Confirme o envio no seu programa de e-mail.');
+}
+
+function selectLanguage(lang){
+  localStorage.setItem('kiarmed_lang',lang);
+  document.documentElement.lang=lang;
+  document.getElementById('languageOverlay').classList.remove('open');
+  const names={pt:'Português',es:'Español',fr:'Français',en:'English'};
+  showToast(`Idioma selecionado: ${names[lang]}`);
+}
+function showLanguagePopupIfNeeded(){
+  const lang=localStorage.getItem('kiarmed_lang');
+  if(lang){document.documentElement.lang=lang;return;}
+  document.getElementById('languageOverlay').classList.add('open');
+}
+function setCookieConsent(value){
+  localStorage.setItem('kiarmed_cookie_consent',value);
+  document.getElementById('cookieBanner').classList.remove('open');
+}
+function showCookieBannerIfNeeded(){
+  if(!localStorage.getItem('kiarmed_cookie_consent')){
+    document.getElementById('cookieBanner').classList.add('open');
+  }
+}
+
 function toggleWish(e,btn){e.stopPropagation();btn.classList.toggle('active');btn.textContent=btn.classList.contains('active')?'♥':'♡';}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
 
-saveCart();render();
+saveCart();render();showLanguagePopupIfNeeded();showCookieBannerIfNeeded();
 </script>
 </body>
 </html>
